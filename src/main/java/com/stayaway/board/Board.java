@@ -1,10 +1,10 @@
-package com.tilacyn.stayaway.board;
+package com.stayaway.board;
 
-import com.tilacyn.stayaway.cards.Card;
-import com.tilacyn.stayaway.cards.Deck;
-import com.tilacyn.stayaway.cards.Trash;
-import com.tilacyn.stayaway.move.Move;
-import com.tilacyn.stayaway.user.UserID;
+import com.stayaway.cards.Card;
+import com.stayaway.cards.Deck;
+import com.stayaway.cards.Trash;
+import com.stayaway.move.Move;
+import com.stayaway.user.UserID;
 
 import java.util.List;
 import java.util.Map;

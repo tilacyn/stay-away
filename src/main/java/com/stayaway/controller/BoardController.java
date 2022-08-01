@@ -1,4 +1,4 @@
-package com.tilacyn.stayaway.controller;
+package com.stayaway.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -1,7 +1,7 @@
-package com.tilacyn.stayaway.service;
+package com.stayaway.service;
 
-import com.tilacyn.stayaway.cards.Card;
-import com.tilacyn.stayaway.user.User;
+import com.stayaway.user.User;
+import com.stayaway.cards.Card;
 
 import java.util.List;
 
