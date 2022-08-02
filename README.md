@@ -1,3 +1,7 @@
+### requirements
+
+jdk 11, maven
+
 ### build
 
 `mvn clean install`
