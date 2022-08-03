@@ -1,6 +1,6 @@
 package com.stayaway.controller;
 
-import com.tilacyn.stayaway.proto.BoardProto;
+import com.stayaway.proto.BoardProto;
 import com.tilacyn.stayaway.service.BoardService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

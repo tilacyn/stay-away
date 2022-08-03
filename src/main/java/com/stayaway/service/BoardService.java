@@ -1,9 +1,8 @@
-package com.tilacyn.stayaway.service;
+package com.stayaway.service;
 
-import com.tilacyn.stayaway.board.Board;
-import com.tilacyn.stayaway.dao.BoardDAO;
-import com.tilacyn.stayaway.model.BoardModel;
-import com.tilacyn.stayaway.proto.BoardProto;
+import com.stayaway.dao.BoardDAO;
+import com.stayaway.model.BoardModel;
+import com.stayaway.proto.BoardProto;
 import org.springframework.stereotype.Service;
 
 @Service

@@ -1,4 +1,4 @@
-package com.tilacyn.stayaway.model;
+package com.stayaway.model;
 
 // TODO
 public class BoardModel {

@@ -1,6 +1,6 @@
-package com.tilacyn.stayaway.proto;
+package com.stayaway.proto;
 
-import com.tilacyn.stayaway.cards.Card;
+import com.stayaway.cards.Card;
 import lombok.Data;
 
 import java.util.List;

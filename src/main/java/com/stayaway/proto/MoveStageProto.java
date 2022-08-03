@@ -1,6 +1,4 @@
-package com.tilacyn.stayaway.proto;
-
-import lombok.Data;
+package com.stayaway.proto;
 
 public enum MoveStageProto {
     CHOOSING_CARD_TO_PLAY,

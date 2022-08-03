@@ -1,4 +1,4 @@
-package com.tilacyn.stayaway.proto;
+package com.stayaway.proto;
 
 import lombok.Data;
 
