@@ -1,4 +1,4 @@
-package com.tilacyn.stayaway.user;
+package com.stayaway.user;
 
 public class User {
     private String id;

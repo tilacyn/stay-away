@@ -1,4 +1,4 @@
-package com.tilacyn.stayaway.user;
+package com.stayaway.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

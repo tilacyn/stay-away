@@ -1,4 +1,4 @@
-package com.tilacyn.stayaway.cards;
+package com.stayaway.cards;
 
 public enum Card {
     FLAMETHROWER,

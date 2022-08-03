@@ -1,4 +1,4 @@
-package com.tilacyn.stayaway.controller;
+package com.stayaway.controller;
 
 import com.tilacyn.stayaway.proto.BoardProto;
 import com.tilacyn.stayaway.service.BoardService;
