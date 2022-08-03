@@ -11,14 +11,17 @@ import java.util.Map;
 
 public class Board {
     private String id;
-    private Map<UserID, Player> players;
+    private Map<UserID, Player> userID2Player;
+    private List<Player> players;
+    private int currentPlayer;
+
 
     private Deck deck;
     private Trash trash;
 
 //    TODO
-    public void makeMove(UserID userID, Move move) {
-
+    public void accept(UserID userID, Move move) {
+        
     }
 
     private class Player {
