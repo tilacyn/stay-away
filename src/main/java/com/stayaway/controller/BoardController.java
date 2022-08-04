@@ -1,7 +1,7 @@
 package com.stayaway.controller;
 
 import com.stayaway.proto.BoardProto;
-import com.tilacyn.stayaway.service.BoardService;
+import com.stayaway.service.BoardService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
