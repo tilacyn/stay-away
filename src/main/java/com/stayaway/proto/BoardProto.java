@@ -1,11 +1,13 @@
 package com.stayaway.proto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.stayaway.cards.Card;
 import lombok.Data;
 
 import java.util.List;
 
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class BoardProto {
     private List<String> players;
     private CardTypeProto topDeckCardType;
@@ -13,5 +15,5 @@ public class BoardProto {
     private String theThingUserID;
     private String currentPlayerUserID;
     private MoveInProgressProto playCardStatus;
-    List<Card> cards;
+    private List<Card> cards;
 }

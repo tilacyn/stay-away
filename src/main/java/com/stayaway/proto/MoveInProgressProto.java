@@ -1,8 +1,10 @@
 package com.stayaway.proto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class MoveInProgressProto {
     private MoveStageProto moveStage;
     private String firstUserID;
