@@ -1,22 +1,19 @@
 package com.stayaway.service;
 
-import com.stayaway.dao.BoardDAO;
-import com.stayaway.proto.BoardProto;
-import com.stayaway.proto.BoardProtoFactory;
+import com.stayaway.dao.model.Board;
+import com.stayaway.dao.repository.BoardRepository;
 import org.springframework.stereotype.Service;
 
 @Service
 public class BoardService {
-    private final BoardDAO boardDAO;
-    private final BoardProtoFactory boardProtoFactory;
+    private final BoardRepository boardRepository;
 
-    public BoardService(BoardDAO boardDAO, BoardProtoFactory boardProtoFactory) {
-        this.boardDAO = boardDAO;
-        this.boardProtoFactory = boardProtoFactory;
+    public BoardService(BoardRepository boardRepository) {
+        this.boardRepository = boardRepository;
     }
 
-    public BoardProto getBoardProto(String id) {
-        return boardProtoFactory.create(boardDAO.getBoard(id));
+    public Board getBoard(String id) {
+        return boardRepository.findById(id).orElseThrow(IllegalStateException::new);
     }
 
 }
