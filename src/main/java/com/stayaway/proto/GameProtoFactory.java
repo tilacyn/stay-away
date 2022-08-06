@@ -6,6 +6,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class GameProtoFactory {
     public GameProto createGame(GameModel game) {
-        return new GameProto(game.getGameID(), game.getName(), game.getUserIDs());
+        return new GameProto(game.getId(), game.getName(), game.getUserIDs());
     }
 }

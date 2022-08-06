@@ -9,7 +9,12 @@ import java.util.List;
 @AllArgsConstructor
 public class GameModel {
 //    gameID is the same thing as board id ig
-    private String gameID;
+    private String id;
     private String name;
     private List<String> userIDs;
+    private GameStatus gameStatus;
+
+    public enum GameStatus {
+        PREGAME, RUNNING, FINISHED
+    }
 }

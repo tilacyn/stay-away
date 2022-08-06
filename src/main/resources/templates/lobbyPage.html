@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="/boardPage.css">
+    <title>Stay Away</title>
+</head>
+<body>
+
+<div class="mainHeader"> Lobby </div>
+
+<div sec:authorize="isAuthenticated()">
+    Authenticated as <span sec:authentication="name"></span></div>
+
+<table>
+    <tbody>
+    <tr th:each="game: ${games}">
+        <td th:text="${game.id}"></td>
+        <td th:text="${game.name}"></td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

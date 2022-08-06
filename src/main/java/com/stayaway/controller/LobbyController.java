@@ -3,7 +3,7 @@ package com.stayaway.controller;
 import com.stayaway.input.CreateGameInput;
 import com.stayaway.proto.GameProto;
 import com.stayaway.proto.GameProtoFactory;
-import com.stayaway.service.LobbyService;
+import com.stayaway.service.GameService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -18,12 +18,12 @@ import java.util.stream.Collectors;
 @Controller
 public class LobbyController {
 
-    private final LobbyService lobbyService;
+    private final GameService gameService;
     private final GameProtoFactory gameProtoFactory;
     private final Logger logger = LoggerFactory.getLogger(LobbyController.class);
 
-    public LobbyController(LobbyService lobbyService, GameProtoFactory gameProtoFactory) {
-        this.lobbyService = lobbyService;
+    public LobbyController(GameService gameService, GameProtoFactory gameProtoFactory) {
+        this.gameService = gameService;
         this.gameProtoFactory = gameProtoFactory;
     }
 
@@ -31,7 +31,7 @@ public class LobbyController {
     @GetMapping("/lobby")
     public String getLobbyPage(Model model, Principal principal) {
         logger.info("[GET_LOBBY_PAGE] [{}]", principal.getName());
-        var games = lobbyService.listGames();
+        var games = gameService.listGames();
         model.addAttribute("games", games);
         return "lobbyPage";
     }
@@ -40,7 +40,7 @@ public class LobbyController {
     public ResponseEntity<Void> createGame(@RequestBody CreateGameInput createGameInput, Principal principal) {
         logger.info("[CREATE_GAME] [{}]", principal.getName());
         try {
-            lobbyService.createGame(createGameInput.getName(), createGameInput.getUserIDs());
+            gameService.createGame(createGameInput.getName(), createGameInput.getUserIDs());
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
@@ -51,7 +51,7 @@ public class LobbyController {
     @ResponseBody
     public List<GameProto> listGames(Principal principal) {
         logger.info("[LIST_GAMES] [{}]", principal.getName());
-        return lobbyService.listGames().stream()
+        return gameService.listGames().stream()
                 .map(gameProtoFactory::createGame)
                 .collect(Collectors.toList());
     }
