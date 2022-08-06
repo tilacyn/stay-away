@@ -1,6 +1,7 @@
 package com.stayaway.controller;
 
 import com.stayaway.proto.BoardProto;
+import com.stayaway.proto.BoardProtoFactory;
 import com.stayaway.service.BoardService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,10 +15,14 @@ import java.security.Principal;
 
 @Controller
 public class BoardController {
+
+    private final BoardProtoFactory boardProtoFactory;
+
     private final BoardService boardService;
     private final Logger logger = LoggerFactory.getLogger(BoardController.class);
 
-    public BoardController(BoardService boardService) {
+    public BoardController(BoardProtoFactory boardProtoFactory, BoardService boardService) {
+        this.boardProtoFactory = boardProtoFactory;
         this.boardService = boardService;
     }
 
@@ -27,12 +32,12 @@ public class BoardController {
         return "boardPage";
     }
 
-//    TODO
+    //    TODO
     @GetMapping("/v1/board/{boardId}")
     @ResponseBody
     public BoardProto getBoard(@PathVariable String boardId, Principal principal) {
         String userID = principal.getName();
         logger.info("[GET_BOARD] [{}]", userID);
-        return boardService.getBoardProto(boardId, userID);
+        return boardProtoFactory.buildProto(boardService.getBoard(boardId));
     }
 }

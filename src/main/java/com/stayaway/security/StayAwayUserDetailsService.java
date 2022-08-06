@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class StayAwayUserDetailsService implements UserDetailsService {
-    private UserDAO userDAO;
+    private final UserDAO userDAO;
 
     public StayAwayUserDetailsService(UserDAO userDAO) {
         this.userDAO = userDAO;

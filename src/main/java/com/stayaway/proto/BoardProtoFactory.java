@@ -1,12 +1,23 @@
 package com.stayaway.proto;
 
-import com.stayaway.model.BoardModel;
+import com.stayaway.dao.model.Board;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 public class BoardProtoFactory {
 
-    public BoardProto create(BoardModel boardModel, String userID) {
-        return null;
+    //todo implement
+    public BoardProto buildProto(Board board) {
+        return new BoardProto(
+                List.of(),
+                CardTypeProto.PANIC,
+                "a",
+                "b",
+                null,
+                List.of(),
+                board.getName()
+        );
     }
 }
