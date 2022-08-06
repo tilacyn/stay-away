@@ -1,6 +1,6 @@
 package com.stayaway.proto;
 
-import com.stayaway.cards.Card;
+import com.stayaway.dao.model.Card;
 import lombok.Data;
 
 import java.util.List;
