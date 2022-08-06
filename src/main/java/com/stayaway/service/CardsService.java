@@ -1,7 +1,7 @@
 package com.stayaway.service;
 
 import com.stayaway.user.User;
-import com.stayaway.cards.Card;
+import com.stayaway.dao.model.Card;
 
 import java.util.List;
 
