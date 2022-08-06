@@ -4,14 +4,15 @@ import com.stayaway.cards.Card;
 import com.stayaway.cards.Deck;
 import com.stayaway.cards.Trash;
 import com.stayaway.move.Move;
-import com.stayaway.user.UserID;
 
 import java.util.List;
 import java.util.Map;
-
+// this class should probably be deleted
+// ig there is no need to maintain three separate Board classes
+// all the board model transformation should be performed on model.BoardModel if possible
 public class Board {
     private String id;
-    private Map<UserID, Player> userID2Player;
+    private Map<String, Player> userID2Player;
     private List<Player> players;
     private int currentPlayer;
 
@@ -20,12 +21,12 @@ public class Board {
     private Trash trash;
 
 //    TODO
-    public void accept(UserID userID, Move move) {
+    public void accept(String userID, Move move) {
         
     }
 
     private class Player {
-        private UserID userID;
+        private String userID;
         private boolean infected;
         private boolean theThing;
         private List<Card> cards;

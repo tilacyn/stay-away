@@ -15,8 +15,8 @@ public class BoardService {
         this.boardProtoFactory = boardProtoFactory;
     }
 
-    public BoardProto getBoardProto(String id) {
-        return boardProtoFactory.create(boardDAO.getBoard(id));
+    public BoardProto getBoardProto(String id, String userID) {
+        return boardProtoFactory.create(boardDAO.getBoard(id), userID);
     }
 
 }

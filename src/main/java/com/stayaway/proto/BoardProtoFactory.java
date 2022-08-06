@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class BoardProtoFactory {
 
-    public BoardProto create(BoardModel boardModel) {
+    public BoardProto create(BoardModel boardModel, String userID) {
         return null;
     }
 }
