@@ -12,7 +12,7 @@ public class BoardService {
         this.boardRepository = boardRepository;
     }
 
-    public Board getBoard(String id, String userID) {
+    public Board getBoard(String id) {
         return boardRepository.findById(id).orElseThrow(IllegalStateException::new);
     }
 
