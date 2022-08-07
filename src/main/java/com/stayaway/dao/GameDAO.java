@@ -1,11 +1,15 @@
 package com.stayaway.dao;
 
-import com.stayaway.model.GameModel;
+import com.stayaway.model.Game;
 
 import java.util.List;
 
 public interface GameDAO {
-    void createGame(String name, List<String> userIDs);
+    String createGame(String name, String ownerID);
 
-    List<GameModel> listGames();
+    List<Game> listGames();
+
+    Game getGame(String id);
+
+    void saveGame(Game game);
 }

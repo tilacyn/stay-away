@@ -1,0 +1,18 @@
+body {
+    background-color: #097969;
+}
+
+th {
+    font-weight: bold;
+    font-size: 25px;
+}
+
+.userTable {
+    background-color: white;
+    margin-top: 50px;
+}
+
+.userIDCell {
+    width: 50px;
+}
+
