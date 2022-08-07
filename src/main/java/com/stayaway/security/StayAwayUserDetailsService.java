@@ -1,11 +1,10 @@
 package com.stayaway.security;
 
 import com.stayaway.dao.UserDAO;
-import com.stayaway.exception.UserNotFoundException;
+import com.stayaway.exception.StayAwayException;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 
@@ -19,18 +18,14 @@ public class StayAwayUserDetailsService implements UserDetailsService {
 
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        com.stayaway.model.User user;
+    public UserDetails loadUserByUsername(String username) throws StayAwayException {
+        com.stayaway.dao.model.User user;
         String password;
-        try {
-            user = userDAO.getUser(username);
-            password = userDAO.getPassword(username);
-        } catch (UserNotFoundException e) {
-            throw new UsernameNotFoundException("user not found in UserDAO", e);
-        }
+        user = userDAO.getUser(username);
+        password = userDAO.getPassword(username);
 
         return User.withDefaultPasswordEncoder()
-                .username(user.getId())
+                .username(user.getLogin())
                 .password(password)
                 .roles("USER")
                 .build();
