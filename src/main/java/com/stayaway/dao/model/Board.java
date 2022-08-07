@@ -1,37 +1,52 @@
 package com.stayaway.dao.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
 @Document(collection = "boards")
 @Data
+//TODO gameId_stage index
+@CompoundIndex(name = "id_stage", def = "{'id' : 1, 'stage': 1}", background = true)
 public class Board {
     @Id
-    private String id;
+    private final String id;
 
-    @Indexed(unique = true)
-    private String name;
+    private final List<Player> players;
 
-    private List<Player> players;
+    //stage != turn (looks like turn ~= stage / 3)
+    private final int stage;
 
-    private int currentPlayer;
+    private final int turn;
 
-    private Deck deck;
+    private final int currentPlayer;
+
+    private final Deck deck;
+
+    private final MoveInProgress currentMove;
 
     @Data
     public static class Player {
-        private String userID;
-        private PlayerType playerType;
-        private List<Card> cards;
+        private final String userId;
+        private final PlayerType type;
+        private final List<Card> cards;
+
+        @JsonIgnore
+        public boolean canSeeTheThing() {
+            return PlayerType.THE_THING.equals(type) ||
+                    PlayerType.INFECTED.equals(type) ||
+                    PlayerType.DEAD.equals(type);
+        }
     }
 
     public enum PlayerType {
         THE_THING,
         INFECTED,
-        HUMAN
+        HUMAN,
+        DEAD
     }
 }
