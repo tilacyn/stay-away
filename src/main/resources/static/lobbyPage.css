@@ -1,0 +1,30 @@
+body {
+    background-color: #097969;
+}
+
+th {
+    font-weight: bold;
+    font-size: 25px;
+}
+
+.gameTable {
+    background-color: white;
+}
+
+.statusCell {
+    font-size: 20px;
+    width: 100px;
+    text-align: center;
+}
+
+.nameCell {
+    font-size: 20px;
+    width: 200px;
+    text-align: center;
+}
+
+.idCell {
+    font-size: 20px;
+    width: 100px;
+    text-align: center;
+}

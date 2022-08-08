@@ -4,13 +4,14 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" href="/boardPage.css">
+    <link rel="stylesheet" href="/common.css">
     <title>Stay Away</title>
 </head>
 <body>
 
 <div class="mainHeader"> Stay Away</div>
 
-<div sec:authorize="isAuthenticated()">
+<div sec:authorize="isAuthenticated()" class="loggedInAs">
     Authenticated as <span sec:authentication="name"></span></div>
 
 <div class="playArea">
