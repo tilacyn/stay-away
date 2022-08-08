@@ -39,7 +39,12 @@ public class GameRepository implements GameDAO {
 
     @Override
     public void saveGame(Game game) {
-//        no impl required for in-memory storage
+        try {
+            var oldGame = getGame(game.getId());
+            gameModels.remove(oldGame);
+        } catch (Exception ignored) {
+        }
+        gameModels.add(game);
     }
 
 

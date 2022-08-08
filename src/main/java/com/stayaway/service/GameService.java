@@ -35,8 +35,8 @@ public class GameService {
         var status = game.getStatus();
         if (status == Game.GameStatus.PREGAME) {
             var boardId = boardService.createBoard(game);
-            game.setStatus(Game.GameStatus.RUNNING);
-            gameDAO.saveGame(game);
+            var newGame = new Game(game.getId(), game.getName(), game.getOwnerID(), Game.GameStatus.RUNNING, game.getUserIDs());
+            gameDAO.saveGame(newGame);
             return boardId;
         } else {
             throw new RuntimeException(String.format("game with id %s cannot be started, it is in status %s", id, status));
