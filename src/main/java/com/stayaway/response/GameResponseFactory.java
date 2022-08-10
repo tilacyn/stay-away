@@ -1,4 +1,4 @@
-package com.stayaway.proto;
+package com.stayaway.response;
 
 import com.stayaway.model.Game;
 import org.springframework.stereotype.Component;

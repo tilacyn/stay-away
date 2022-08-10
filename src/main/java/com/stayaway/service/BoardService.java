@@ -2,6 +2,7 @@ package com.stayaway.service;
 
 import com.stayaway.dao.model.Board;
 import com.stayaway.dao.repository.BoardRepository;
+import com.stayaway.exception.StayAwayException;
 import com.stayaway.model.Game;
 import org.springframework.stereotype.Service;
 
@@ -13,8 +14,11 @@ public class BoardService {
         this.boardRepository = boardRepository;
     }
 
-    public Board getBoard(String id) {
-        return boardRepository.findById(id).orElseThrow(IllegalStateException::new);
+    public Board getCurrentBoardState(String id) {
+        if (id == null) {
+            throw StayAwayException.missingInput("boardId");
+        }
+        return boardRepository.findFirstByIdOrderByStageDesc(id).orElseThrow(() -> StayAwayException.notFound(id, StayAwayException.EntityType.BOARD));
     }
 
     /**

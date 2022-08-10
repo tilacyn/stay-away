@@ -1,8 +1,8 @@
 package com.stayaway.controller;
 
-import com.stayaway.proto.GameResponse;
-import com.stayaway.proto.GameResponseFactory;
 import com.stayaway.request.CreateGameRequest;
+import com.stayaway.response.GameResponse;
+import com.stayaway.response.GameResponseFactory;
 import com.stayaway.service.GameService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -69,8 +69,7 @@ public class GameController {
         String boardID;
         try {
             boardID = gameService.startGame(gameID);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
         String location = String.format("/board/%s", boardID);
@@ -85,8 +84,5 @@ public class GameController {
                 .map(gameProtoFactory::buildGameResponse)
                 .collect(Collectors.toList());
     }
-
-
-
 
 }

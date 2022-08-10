@@ -22,4 +22,9 @@ public class MongoConfig extends AbstractMongoClientConfiguration {
     protected String getDatabaseName() {
         return "stayaway";
     }
+
+    @Override
+    protected boolean autoIndexCreation() {
+        return true;
+    }
 }
