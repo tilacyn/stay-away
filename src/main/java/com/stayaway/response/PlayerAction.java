@@ -1,4 +1,4 @@
-package com.stayaway.proto;
+package com.stayaway.response;
 
 public enum PlayerAction {
     PENDING,

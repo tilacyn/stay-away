@@ -1,4 +1,4 @@
-package com.stayaway.proto;
+package com.stayaway.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.stayaway.dao.model.Card;
