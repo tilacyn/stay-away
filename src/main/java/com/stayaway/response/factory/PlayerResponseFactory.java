@@ -9,6 +9,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class PlayerResponseFactory {
     public PlayerResponse buildProto(User user) {
-        return new PlayerResponse(user.getId(), user.getLogin());
+        return new PlayerResponse(user.getLogin());
     }
 }

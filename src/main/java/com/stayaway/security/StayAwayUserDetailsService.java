@@ -1,6 +1,6 @@
 package com.stayaway.security;
 
-import com.stayaway.dao.UserDAO;
+import com.stayaway.dao.repository.UserRepository;
 import com.stayaway.exception.StayAwayException;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,19 +10,19 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class StayAwayUserDetailsService implements UserDetailsService {
-    private final UserDAO userDAO;
+    private final UserRepository userRepository;
 
-    public StayAwayUserDetailsService(UserDAO userDAO) {
-        this.userDAO = userDAO;
+    public StayAwayUserDetailsService(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws StayAwayException {
+    public UserDetails loadUserByUsername(String login) throws StayAwayException {
         com.stayaway.dao.model.User user;
         String password;
-        user = userDAO.getUser(username);
-        password = userDAO.getPassword(username);
+        user = userRepository.findByLogin(login).orElseThrow(() -> StayAwayException.notFound(login, StayAwayException.EntityType.USER));
+        password = "123456";
 
         return User.withDefaultPasswordEncoder()
                 .username(user.getLogin())

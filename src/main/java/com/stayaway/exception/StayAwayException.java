@@ -11,6 +11,7 @@ public class StayAwayException extends RuntimeException {
     private final StayAwaySerializationPayload payload;
     private final HttpStatus httpStatus;
 
+
     public interface StayAwaySerializationPayload {
         String getMessage();
     }
@@ -29,6 +30,10 @@ public class StayAwayException extends RuntimeException {
 
     public static StayAwayException missingInput(String property) {
         return new StayAwayException(new StayAwayMissingInputPayload(property), HttpStatus.PRECONDITION_REQUIRED);
+    }
+
+    public static StayAwayException conflict(String message) {
+        return new StayAwayException(new StayAwayConflictFormatPayload(message), HttpStatus.CONFLICT);
     }
 
     public static StayAwaySerializationPayload unknownInternalError(String message) {
@@ -81,6 +86,22 @@ public class StayAwayException extends RuntimeException {
 
     @Getter
     @AllArgsConstructor
+    private static class StayAwayConflictFormatPayload implements StayAwaySerializationPayload {
+        private final String message;
+
+        @Override
+        public String getMessage() {
+            return "Conflict: " + message;
+        }
+
+        @Override
+        public String toString() {
+            return getMessage();
+        }
+    }
+
+    @Getter
+    @AllArgsConstructor
     private static class StayAwayMissingInputPayload implements StayAwaySerializationPayload {
         private final String property;
 
@@ -97,7 +118,8 @@ public class StayAwayException extends RuntimeException {
 
     public enum EntityType {
         BOARD,
-        USER
+        USER,
+        GAME,
     }
 
     @Override
