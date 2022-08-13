@@ -7,6 +7,8 @@ import lombok.Getter;
 @Getter
 //TODO extend
 public enum Card {
+    THE_THING(CardType.EVENT),
+    INFECTED(CardType.EVENT),
     FLAMETHROWER(CardType.EVENT),
     ANALYSIS(CardType.EVENT),
     SUSPICIOUS(CardType.EVENT),
@@ -20,7 +22,10 @@ public enum Card {
     SCARY(CardType.EVENT),
     IM_COMFORTABLE(CardType.EVENT),
     NO_THANKS(CardType.EVENT),
-    THE_THING(CardType.EVENT);
+    MISSED(CardType.EVENT),
+    NO_BARBECUE(CardType.EVENT),
+    QUARANTINE(CardType.EVENT),
+    BARRED_DOOR(CardType.EVENT);
 
     private final CardType cardType;
 }

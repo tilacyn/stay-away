@@ -10,7 +10,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-
+// todo do not include infected into player's hands
 public class BasicCardsDistributor implements CardsDistributor {
     private static final Map<Card, Integer> CARDS_COUNT = new HashMap<>();
     private static final String NOT_ENOUGH_CARDS_MESSAGE = "not enough cards (%d) to distribute among players (%d)";
@@ -18,8 +18,23 @@ public class BasicCardsDistributor implements CardsDistributor {
     private final Logger logger = LoggerFactory.getLogger(BasicCardsDistributor.class);
 
     static {
-        CARDS_COUNT.put(Card.FLAMETHROWER, 50);
-        CARDS_COUNT.put(Card.NO_THANKS, 50);
+        CARDS_COUNT.put(Card.FLAMETHROWER, 5);
+        CARDS_COUNT.put(Card.ANALYSIS, 3);
+        CARDS_COUNT.put(Card.AXE, 2);
+        CARDS_COUNT.put(Card.YOU_BETTER_RUN, 5);
+        CARDS_COUNT.put(Card.BARRED_DOOR, 3);
+        CARDS_COUNT.put(Card.NO_BARBECUE, 3);
+        CARDS_COUNT.put(Card.IM_COMFORTABLE, 3);
+        CARDS_COUNT.put(Card.SUSPICIOUS, 8);
+        CARDS_COUNT.put(Card.CHANGE_PLACES, 5);
+        CARDS_COUNT.put(Card.NO_THANKS, 4);
+        CARDS_COUNT.put(Card.RESOLUTE, 5);
+        CARDS_COUNT.put(Card.SCARY, 4);
+        CARDS_COUNT.put(Card.WATCH_YOUR_BACK, 2);
+        CARDS_COUNT.put(Card.QUARANTINE, 2);
+        CARDS_COUNT.put(Card.MISSED, 3);
+        CARDS_COUNT.put(Card.SEDUCTION, 7);
+        CARDS_COUNT.put(Card.INFECTED, 20);
     }
 
     private List<String> players;
