@@ -1,4 +1,4 @@
-package com.stayaway.model.cards;
+package com.stayaway.model.board.state;
 
 import java.util.function.Function;
 
@@ -7,7 +7,9 @@ import com.stayaway.model.actions.CardChosenAction;
 import com.stayaway.model.actions.ConfirmationAction;
 import com.stayaway.model.actions.TargetChosenAction;
 
-public interface Card {
+public interface BoardState {
+
+    // draw card action ??
 
     void applyCardChosenAction(CardChosenAction action);
 
@@ -19,5 +21,5 @@ public interface Card {
 
     Function<Board, Board> getTransition();
 
-    CardType getType();
+    BoardStatus getStatus();
 }

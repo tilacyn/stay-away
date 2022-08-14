@@ -6,16 +6,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.stayaway.dao.model.BoardState;
+import com.stayaway.dao.model.Board;
 import com.stayaway.exception.StayAwayException;
 import com.stayaway.request.CreateGameRequest;
 import com.stayaway.request.DiscardRequest;
 import com.stayaway.request.ExchangeRequest;
 import com.stayaway.request.PlayRequest;
-import com.stayaway.response.BoardStateResponse;
+import com.stayaway.response.BoardResponse;
 import com.stayaway.response.GameResponse;
 import com.stayaway.response.GameResponseFactory;
-import com.stayaway.response.factory.BoardStateResponseFactory;
+import com.stayaway.response.factory.BoardResponseFactory;
 import com.stayaway.service.GameService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,14 +33,14 @@ public class GameController {
 
     private final GameService gameService;
     private final GameResponseFactory gameProtoFactory;
-    private final BoardStateResponseFactory boardStateResponseFactory;
+    private final BoardResponseFactory boardResponseFactory;
     private final Logger logger = LoggerFactory.getLogger(GameController.class);
 
     public GameController(GameService gameService, GameResponseFactory gameProtoFactory,
-                          BoardStateResponseFactory boardStateResponseFactory) {
+                          BoardResponseFactory boardResponseFactory) {
         this.gameService = gameService;
         this.gameProtoFactory = gameProtoFactory;
-        this.boardStateResponseFactory = boardStateResponseFactory;
+        this.boardResponseFactory = boardResponseFactory;
     }
 
 
@@ -122,14 +122,14 @@ public class GameController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/v1/game/{gameId}/boardState")
+    @GetMapping("/v1/game/{gameId}/board")
     @ResponseBody
-    public BoardStateResponse getBoard(@PathVariable String gameId, Principal principal) throws StayAwayException {
+    public BoardResponse getBoard(@PathVariable String gameId, Principal principal) throws StayAwayException {
         String login = principal.getName();
         logger.info("[GET_BOARD] [{}] [{}]", login, gameId);
-        BoardState boardState = gameService.getCurrentBoardState(gameId);
+        Board board = gameService.getCurrentBoard(gameId);
 
-        return boardStateResponseFactory.buildResponse(boardState, login);
+        return boardResponseFactory.buildResponse(board, login);
     }
 
 }

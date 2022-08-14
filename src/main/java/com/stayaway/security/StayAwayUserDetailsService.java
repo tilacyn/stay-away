@@ -21,7 +21,8 @@ public class StayAwayUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String login) throws StayAwayException {
         com.stayaway.dao.model.User user;
         String password;
-        user = userRepository.findByLogin(login).orElseThrow(() -> StayAwayException.notFound(login, StayAwayException.EntityType.USER));
+        user = userRepository.findByLogin(login).orElseThrow(() -> StayAwayException.notFound(login,
+                StayAwayException.EntityType.USER));
         password = "123456";
 
         return User.withDefaultPasswordEncoder()

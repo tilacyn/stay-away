@@ -1,15 +1,15 @@
 package com.stayaway.response;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.stayaway.dao.model.CardType;
+import com.stayaway.model.cards.CardType;
 import lombok.Data;
 import org.springframework.lang.Nullable;
 
-import java.util.List;
-
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class BoardStateResponse {
+public class BoardResponse {
     private final List<PlayerResponse> players;
     //should be empty if user is not authorized to see which player the thing is
     @Nullable

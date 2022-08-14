@@ -1,14 +1,14 @@
 package com.stayaway.manager.transformations;
 
-import com.stayaway.dao.model.BoardState;
+import com.stayaway.dao.model.Board;
 import com.stayaway.manager.actions.UserAction;
 
 public class ChoosingCardTransformation implements BoardTransformation {
-    public ChoosingCardTransformation(UserAction action, BoardState state) {
+    public ChoosingCardTransformation(UserAction action, Board state) {
     }
 
     @Override
-    public BoardState run(BoardState boardState) {
-        return boardState;
+    public Board run(Board board) {
+        return board;
     }
 }

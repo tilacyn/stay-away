@@ -1,7 +1,7 @@
 package com.stayaway.manager.transformations;
 
-import com.stayaway.dao.model.BoardState;
+import com.stayaway.dao.model.Board;
 
 public interface BoardTransformation {
-    BoardState run(BoardState boardState);
+    Board run(Board board);
 }

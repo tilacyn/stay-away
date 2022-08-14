@@ -1,12 +1,12 @@
 package com.stayaway.service;
 
-import com.stayaway.dao.model.CardType;
-
 import java.util.List;
+
+import com.stayaway.model.cards.CardType;
 
 
 public class CardsService {
-//    TODO
+    //    TODO
     public List<CardType> getUserCards(String userID) {
         return null;
     }

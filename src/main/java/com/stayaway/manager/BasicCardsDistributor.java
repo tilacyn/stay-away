@@ -10,8 +10,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import com.stayaway.dao.model.CardType;
 import com.stayaway.exception.StayAwayException;
+import com.stayaway.model.cards.CardType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

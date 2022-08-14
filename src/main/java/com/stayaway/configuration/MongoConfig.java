@@ -9,8 +9,10 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.ConnectionString;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClientSettings;
-import com.stayaway.dao.model.BoardState;
-import com.stayaway.dao.model.CardType;
+import com.stayaway.model.board.Direction;
+import com.stayaway.model.board.player.Player;
+import com.stayaway.model.board.player.PlayerType;
+import com.stayaway.model.cards.CardType;
 import com.stayaway.utils.PlayerUtils;
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Value;
@@ -52,19 +54,19 @@ public class MongoConfig extends AbstractMongoClientConfiguration {
     }
 
     @WritingConverter
-    private static class PlayerWritingConverter implements Converter<BoardState.Player, DBObject> {
+    private static class PlayerWritingConverter implements Converter<Player, DBObject> {
 
         @Override
-        public DBObject convert(BoardState.Player player) {
+        public DBObject convert(Player player) {
             BasicDBList list = new BasicDBList();
-            PlayerUtils.getPlayersList(player, BoardState.Direction.RIGHT)
+            PlayerUtils.getPlayersList(player, Direction.RIGHT)
                     .stream().map(this::playerToObject)
                     .forEach(list::add);
             return list;
         }
 
 
-        private DBObject playerToObject(BoardState.Player player) {
+        private DBObject playerToObject(Player player) {
             DBObject object = new BasicDBObject();
             object.put("login", player.getLogin());
             object.put("type", player.getType());
@@ -74,21 +76,21 @@ public class MongoConfig extends AbstractMongoClientConfiguration {
     }
 
     @ReadingConverter
-    private static class PlayerReadingConverter implements Converter<ArrayList<Document>, BoardState.Player> {
+    private static class PlayerReadingConverter implements Converter<ArrayList<Document>, Player> {
 
         @Override
-        public BoardState.Player convert(ArrayList<Document> documents) {
-            List<BoardState.Player> players = new ArrayList<>();
+        public Player convert(ArrayList<Document> documents) {
+            List<Player> players = new ArrayList<>();
             documents.stream()
                     .map(this::objectToPlayer)
                     .forEach(players::add);
-            return PlayerUtils.fromList(players, BoardState.Direction.RIGHT);
+            return PlayerUtils.fromList(players, Direction.RIGHT);
         }
 
-        private BoardState.Player objectToPlayer(Document document) {
-            return new BoardState.Player(
+        private Player objectToPlayer(Document document) {
+            return new Player(
                     (String) document.get("login"),
-                    BoardState.PlayerType.valueOf((String) document.get("type")),
+                    PlayerType.valueOf((String) document.get("type")),
                     ((List<?>) document.get("cards")).stream()
                             .map(obj -> (String) obj)
                             .map(CardType::valueOf).collect(Collectors.toList())

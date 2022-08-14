@@ -1,4 +1,4 @@
-package com.stayaway.dao.model;
+package com.stayaway.model.cards;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

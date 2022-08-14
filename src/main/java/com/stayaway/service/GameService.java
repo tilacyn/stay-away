@@ -3,7 +3,7 @@ package com.stayaway.service;
 import java.util.List;
 import java.util.Set;
 
-import com.stayaway.dao.model.BoardState;
+import com.stayaway.dao.model.Board;
 import com.stayaway.dao.model.Game;
 import com.stayaway.dao.repository.BoardRepository;
 import com.stayaway.dao.repository.GameRepository;
@@ -49,7 +49,7 @@ public class GameService {
         var status = game.getStatus();
         if (status == Game.GameStatus.PREGAME) {
             //todo transaction
-            createBoardState(game);
+            createBoard(game);
             var newGame = new Game(game.getId(), game.getName(), game.getOwnerLogin(), Game.GameStatus.RUNNING,
                     game.getUserLogins());
             gameRepository.save(newGame);
@@ -69,15 +69,15 @@ public class GameService {
 //        todo
     }
 
-    public BoardState getCurrentBoardState(String gameID) {
+    public Board getCurrentBoard(String gameID) {
         if (gameID == null) {
             throw StayAwayException.missingInput("gameID");
         }
         return boardRepository.findFirstByGameIdOrderByStageDesc(gameID).orElseThrow(() -> StayAwayException.notFound(gameID, StayAwayException.EntityType.BOARD));
     }
 
-    public void saveBoardState(BoardState boardState) {
-        boardRepository.save(boardState);
+    public void saveBoard(Board board) {
+        boardRepository.save(board);
     }
 
     /**
@@ -85,8 +85,8 @@ public class GameService {
      *
      * @param game game associated with board
      */
-    private void createBoardState(Game game) {
+    private void createBoard(Game game) {
         var board = new BoardFactory().create(game);
-        saveBoardState(board);
+        saveBoard(board);
     }
 }

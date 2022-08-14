@@ -1,7 +1,7 @@
 package com.stayaway.manager;
 
 
-import com.stayaway.dao.model.BoardState;
+import com.stayaway.dao.model.Board;
 import com.stayaway.exception.StayAwayException;
 import com.stayaway.manager.actions.UserAction;
 import com.stayaway.manager.transformations.BoardTransformation;
@@ -26,10 +26,11 @@ public class GameplayManager {
     }
 
     //    TRANSACTIONAL SERIALIZABLE
-    public BoardState processAndSave(UserAction action, String gameID) {
-        BoardState state = gameService.getCurrentBoardState(gameID);
+    public Board processAndSave(UserAction action, String gameID) {
+        Board state = gameService.getCurrentBoard(gameID);
+        //todo generate one of actions, apply to state, apply post-transition, call switch to next state(in the loop)
         BoardTransformation transformation;
-        switch (state.getBoardStatus().getMove()) {
+        switch (state.getBoardState().getStatus()) {
             case EXCHANGING:
                 transformation = new ExchangingTransformation(action, state);
                 break;
@@ -41,7 +42,7 @@ public class GameplayManager {
 //          and so on
         }
         state = transformation.run(state);
-        gameService.saveBoardState(state);
+        gameService.saveBoard(state);
         return state;
     }
 }

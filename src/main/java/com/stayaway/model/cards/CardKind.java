@@ -1,4 +1,4 @@
-package com.stayaway.dao.model;
+package com.stayaway.model.cards;
 
 public enum CardKind {
     PANIC,

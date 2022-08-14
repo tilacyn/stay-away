@@ -1,4 +1,4 @@
-package com.stayaway.model.cards;
+package com.stayaway.model.board.state;
 
 import java.util.function.Function;
 
@@ -7,37 +7,38 @@ import com.stayaway.model.actions.CardChosenAction;
 import com.stayaway.model.actions.ConfirmationAction;
 import com.stayaway.model.actions.TargetChosenAction;
 
-public class EmptyCard implements Card {
-
+/**
+ * @author Vadim Baydyuk <vbaydyuk@yandex-team.ru>
+ * @since 14.08.2022
+ */
+public class DrawingCardBoardState implements BoardState {
     @Override
     public void applyCardChosenAction(CardChosenAction action) {
-        //todo
+
     }
 
     @Override
     public void applyTargetChosenAction(TargetChosenAction action) {
-        //todo
+
     }
 
     @Override
     public void applyConfirmationAction(ConfirmationAction action) {
-        //todo
+
     }
 
     @Override
     public boolean checkPreconditionsFulfilled() {
-        //todo
         return false;
     }
 
     @Override
     public Function<Board, Board> getTransition() {
-        //todo
         return null;
     }
 
     @Override
-    public CardType getType() {
-        return CardType.EMPTY;
+    public BoardStatus getStatus() {
+        return BoardStatus.DRAWING;
     }
 }

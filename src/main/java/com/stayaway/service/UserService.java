@@ -1,11 +1,10 @@
 package com.stayaway.service;
 
+import javax.annotation.PostConstruct;
+
 import com.stayaway.dao.model.User;
 import com.stayaway.dao.repository.UserRepository;
-import com.stayaway.exception.StayAwayException;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.PostConstruct;
 
 @Service
 public class UserService {
