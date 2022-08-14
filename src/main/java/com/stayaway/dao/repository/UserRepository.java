@@ -12,9 +12,4 @@ public interface UserRepository extends MongoRepository<User, String> {
 
     Optional<User> findByLogin(String login);
 
-    default List<User> usersListByIds(List<String> ids) {
-        return StreamSupport.stream(findAllById(ids).spliterator(), false)
-                .collect(Collectors.toList());
-    }
-
 }

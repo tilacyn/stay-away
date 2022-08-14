@@ -1,6 +1,6 @@
 package com.stayaway.response;
 
-import com.stayaway.model.Game;
+import com.stayaway.dao.model.Game;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

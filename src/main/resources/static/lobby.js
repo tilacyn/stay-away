@@ -8,7 +8,7 @@ function createGame() {
     }`
     xhr.send(body)
 
-    if (xhr.status != 201) {
+    if (xhr.status !== 201) {
         alert("failed to create game: " + xhr.response)
         console.log("failed to create game: " + xhr.response)
     } else {
@@ -18,12 +18,12 @@ function createGame() {
 }
 
 function openGame(e) {
-    const gameID = e.children[0].textContent
+    const gameId = e.children[0].textContent
     const status = e.children[2].textContent
-    if (status == "PREGAME") {
-        window.open("/pregame/" + gameID)
-    } else if (status == "RUNNING") {
-        window.open("/board/" + gameID)
+    if (status === "PREGAME") {
+        window.open("/pregame/" + gameId)
+    } else if (status === "RUNNING") {
+        window.open("/game/" + gameId)
     } else {
         console.log("status: " + status)
         alert("not implemented yet")
