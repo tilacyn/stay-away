@@ -1,9 +1,9 @@
 package com.stayaway.dao.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Builder;
 import lombok.Data;
+import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -13,13 +13,14 @@ import java.util.List;
 @Document(collection = "boards")
 @Data
 @Builder
+@ToString
 //TODO gameId_stage index
 @CompoundIndex(name = "id_stage", def = "{'id' : 1, 'stage': 1}", background = true)
 public class Board {
     @Id
     private final String id;
 
-    private final String gameID;
+    private final String gameId;
 
     private final List<Player> players;
 
@@ -55,14 +56,4 @@ public class Board {
         DEAD
     }
 
-    public String toString() {
-        ObjectMapper om = new ObjectMapper();
-        String res;
-        try {
-            res = om.writeValueAsString(this);
-        } catch (Exception e) {
-            return String.format("failed to write json %s", e);
-        }
-        return res;
-    }
 }

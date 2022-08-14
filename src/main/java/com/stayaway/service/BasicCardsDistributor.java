@@ -6,11 +6,18 @@ import com.stayaway.exception.StayAwayException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 // todo do not include infected into player's hands
+// todo map users number into cards counts
 public class BasicCardsDistributor implements CardsDistributor {
     private static final Map<Card, Integer> CARDS_COUNT = new HashMap<>();
     private static final String NOT_ENOUGH_CARDS_MESSAGE = "not enough cards (%d) to distribute among players (%d)";
@@ -44,7 +51,7 @@ public class BasicCardsDistributor implements CardsDistributor {
 
     public BasicCardsDistributor(Set<String> players) {
         if (players.isEmpty()) {
-            throw new IllegalArgumentException("players are empty");
+            throw StayAwayException.internalError("cannot distribute cards: there are no players");
         }
         this.players = new ArrayList<>(players);
     }

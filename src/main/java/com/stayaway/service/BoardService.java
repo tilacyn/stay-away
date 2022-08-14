@@ -22,7 +22,7 @@ public class BoardService {
         if (gameID == null) {
             throw StayAwayException.missingInput("gameID");
         }
-        return boardRepository.findFirstByGameIDOrderByStageDesc(gameID).orElseThrow(() -> StayAwayException.notFound(gameID, StayAwayException.EntityType.BOARD));
+        return boardRepository.findFirstByGameIdOrderByStageDesc(gameID).orElseThrow(() -> StayAwayException.notFound(gameID, StayAwayException.EntityType.BOARD));
     }
 
     public void save(Board board) {
@@ -34,12 +34,8 @@ public class BoardService {
      * @param game game associated with board
      */
     public void createBoard(Game game) {
-        try {
-            var board = new BoardFactory().create(game);
-            save(board);
-        } catch (IllegalArgumentException e) {
-            throw StayAwayException.conflict(String.format("cannot create board for game (%s): ", game.getId()) + e.getMessage());
-        }
+        var board = new BoardFactory().create(game);
+        save(board);
     }
 
 }

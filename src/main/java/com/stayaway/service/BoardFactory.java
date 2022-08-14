@@ -33,7 +33,7 @@ class BoardFactory {
                 .turn(0)
                 .currentPlayer(RandomUtils.nextInt(0, players.size()))
                 .id(RandomStringUtils.randomAlphabetic(10))
-                .gameID(game.getId())
+                .gameId(game.getId())
                 .build();
     }
 }

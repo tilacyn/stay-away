@@ -6,5 +6,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.Optional;
 
 public interface BoardRepository extends MongoRepository<Board, String> {
-    Optional<Board> findFirstByGameIDOrderByStageDesc(String boardId);
+    Optional<Board> findFirstByGameIdOrderByStageDesc(String boardId);
 }
