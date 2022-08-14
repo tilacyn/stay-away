@@ -54,25 +54,17 @@ public class GameController {
         String userID = principal.getName();
         logger.info("[CREATE_GAME] [{}]", userID);
         String gameID;
-        try {
-            gameID = gameService.createGame(createGameRequest.getName(), userID);
-        } catch (Exception e) {
-            return ResponseEntity.internalServerError().build();
-        }
+        gameID = gameService.createGame(createGameRequest.getName(), userID);
         String location = String.format("/pregame/%s", gameID);
         return ResponseEntity.created(URI.create(location)).build();
     }
 
     @PostMapping("/v1/start/{gameID}")
     public ResponseEntity<Void> startGame(@PathVariable String gameID, Principal principal) {
-        logger.info("[CREATE_GAME] [{}]", principal.getName());
-        String boardID;
-        try {
-            boardID = gameService.startGame(gameID);
-        } catch (Exception e) {
-            return ResponseEntity.internalServerError().build();
-        }
-        String location = String.format("/board/%s", boardID);
+        logger.info("[START_GAME] [{}] [{}]", gameID, principal.getName());
+        gameService.startGame(gameID);
+        logger.info("[GAME_STARTED] [{}] [{}]", gameID, principal.getName());
+        String location = String.format("/board/%s", gameID);
         return ResponseEntity.created(URI.create(location)).build();
     }
 

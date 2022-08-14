@@ -13,9 +13,9 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class PlayerUtils {
     public static Board.Player getPlayerByUser(Board board, User user) throws StayAwayException {
-        return board.getPlayers().stream().filter(player -> player.getUserId().equals(user.getId())).findFirst()
+        return board.getPlayers().stream().filter(player -> player.getLogin().equals(user.getLogin())).findFirst()
                 // todo implement spectators mode
-                .orElseThrow(() -> StayAwayException.internalError("No such user[" + user.getId() + "] on the board[" + board.getId() + "]"));
+                .orElseThrow(() -> StayAwayException.internalError("No such user[" + user.getLogin() + "] on the board[" + board.getId() + "]"));
     }
 
     public static Board.Player getTheThing(Board board) throws StayAwayException {

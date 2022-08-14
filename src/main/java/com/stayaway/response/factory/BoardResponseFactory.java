@@ -21,11 +21,11 @@ public class BoardResponseFactory {
     }
 
     //todo implement
-    public BoardResponse buildProto(Board board, List<User> boardPlayers, User user) {
+    public BoardResponse buildReponse(Board board, List<User> boardPlayers, User user) {
         return new BoardResponse(
                 boardPlayers.stream().map(playerResponseFactory::buildProto).collect(Collectors.toList()),
                 getTheThingUserId(board, user),
-                PlayerUtils.getCurrentPlayer(board).getUserId(),
+                PlayerUtils.getCurrentPlayer(board).getLogin(),
 
                 getCurrentPlayerAction(board, user),
                 getCurrentCardToBePlaying(board),
@@ -51,6 +51,6 @@ public class BoardResponseFactory {
 
     private String getTheThingUserId(Board board, User user) {
         Board.Player player = PlayerUtils.getPlayerByUser(board, user);
-        return player.canSeeTheThing() ? PlayerUtils.getTheThing(board).getUserId() : null;
+        return player.canSeeTheThing() ? PlayerUtils.getTheThing(board).getLogin() : null;
     }
 }

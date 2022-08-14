@@ -9,16 +9,16 @@ import com.stayaway.service.BoardService;
 import com.stayaway.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
 import java.util.List;
 
-@RestController
+@Controller
 public class BoardController {
 
     private final BoardResponseFactory boardResponseFactory;
@@ -39,17 +39,16 @@ public class BoardController {
         return "boardPage";
     }
 
-    //    TODO
-    @GetMapping("/v1/board/{boardId}")
+    @GetMapping("/v1/board/{gameId}")
     @ResponseBody
-    public BoardResponse getBoard(@PathVariable String boardId, Principal principal) throws StayAwayException {
-        String userId = principal.getName();
-        logger.info("[GET_BOARD] [{}]", userId);
-        Board board = boardService.getCurrentBoardState(boardId);
+    public BoardResponse getBoard(@PathVariable String gameId, Principal principal) throws StayAwayException {
+        String login = principal.getName();
+        logger.info("[GET_BOARD] [{}] [{}]", login, gameId);
+        Board board = boardService.getCurrentBoardState(gameId);
         //maybe need to introduce kind of BoardAnswer(which includes users) and move user service call to board service
         List<User> boardPlayers = userService.getBoardPlayers(board);
-        User user = userService.getUser(userId);
+        User user = userService.getUser(login);
 
-        return boardResponseFactory.buildProto(board, boardPlayers, user);
+        return boardResponseFactory.buildReponse(board, boardPlayers, user);
     }
 }

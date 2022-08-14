@@ -1,45 +1,56 @@
 package com.stayaway.service;
 
-import com.stayaway.dao.GameDAO;
+import com.stayaway.dao.repository.GameRepository;
+import com.stayaway.exception.StayAwayException;
 import com.stayaway.model.Game;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class GameService {
-    private final GameDAO gameDAO;
+    private final GameRepository gameRepository;
     private final BoardService boardService;
 
-    public GameService(GameDAO gameDAO, BoardService boardService) {
-        this.gameDAO = gameDAO;
+    private final Logger logger = LoggerFactory.getLogger(GameService.class);
+
+    public GameService(GameRepository gameRepository, BoardService boardService) {
+        this.gameRepository = gameRepository;
         this.boardService = boardService;
     }
 
     public List<Game> listGames() {
-        return gameDAO.listGames();
+        return gameRepository.findAll();
     }
 
     public String createGame(String name, String ownerID) {
-        return gameDAO.createGame(name, ownerID);
+        var id = RandomStringUtils.randomAlphabetic(10);
+        var game = new Game(id, name, ownerID, Game.GameStatus.PREGAME, Set.of("tilacyn", "Kowalski1337", "hey_boris"));
+        gameRepository.save(game);
+        return id;
     }
 
 
     public Game getGame(String id) {
-        return gameDAO.getGame(id);
+        return gameRepository.findById(id)
+                .orElseThrow(() -> StayAwayException.notFound(id, StayAwayException.EntityType.GAME));
     }
 
-    public String startGame(String id) {
+    public void startGame(String id) {
         var game = getGame(id);
+
 //      each game should have a single host thus no need to provide multithreading guarantees
         var status = game.getStatus();
         if (status == Game.GameStatus.PREGAME) {
-            var boardId = boardService.createBoard(game);
+            boardService.createBoard(game);
             var newGame = new Game(game.getId(), game.getName(), game.getOwnerID(), Game.GameStatus.RUNNING, game.getUserIDs());
-            gameDAO.saveGame(newGame);
-            return boardId;
+            gameRepository.save(newGame);
         } else {
-            throw new RuntimeException(String.format("game with id %s cannot be started, it is in status %s", id, status));
+            throw StayAwayException.conflict(String.format("game with id %s cannot be started, it is in status %s", id, status));
         }
     }
 
