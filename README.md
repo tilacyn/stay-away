@@ -10,13 +10,11 @@ jdk 11, maven
 
 ###### Install mongodb
 
-`
+```(bash)
 brew tap mongodb/brew
-
 brew update
-
 brew install mongodb-community@6.0
-`
+```
 ###### Mongodb start service
 
 `
@@ -31,11 +29,10 @@ brew services start mongodb-community@6.0
 
 ###### Inside mongosh
 
-`
+```(bash)
 use stayaway
-
 db.createUser({ user: "admin", pwd: "admin", roles: [ "dbOwner" ] })
-`
+```
 
 ### build
 
