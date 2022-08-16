@@ -12,7 +12,9 @@ jdk 11, maven
 
 `
 brew tap mongodb/brew
+
 brew update
+
 brew install mongodb-community@6.0
 `
 ###### Mongodb start service
@@ -31,6 +33,7 @@ brew services start mongodb-community@6.0
 
 `
 use stayaway
+
 db.createUser({ user: "admin", pwd: "admin", roles: [ "dbOwner" ] })
 `
 
