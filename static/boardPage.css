@@ -1,0 +1,52 @@
+body {
+    background-color: #097969;
+}
+
+table {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.mainPlayerHand {
+    margin-left: auto;
+    margin-right: auto;
+
+    position: relative;
+    top: 100px;
+}
+
+.mainPlayerCard {
+    width: 25%;
+    border: solid 2px;
+    background-color: gray;
+}
+
+.playArea {
+    width: 800px;
+    margin-top: 10px;
+    height: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.gameTable {
+    width: 600px;
+    height: 600px;
+    -webkit-border-radius: 250px;
+    -moz-border-radius: 250px;
+    border-radius: 250px;
+    background: darkgreen;
+    border-color: #8b4513;
+    border-width: 10px;
+
+    position: relative;
+
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+}
+
+.mainPlayerCard {
+    width: 119px;
+    height: 166px;
+}
