@@ -1,17 +1,20 @@
 package com.stayaway.dao.model;
 
-import java.util.List;
-
+import com.stayaway.core.handler.*;
+import com.stayaway.core.state.BoardState;
 import com.stayaway.model.board.Direction;
 import com.stayaway.model.board.player.Player;
-import com.stayaway.model.board.state.BoardState;
 import com.stayaway.model.cards.CardType;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
+
+import java.util.List;
 
 @Document(collection = "boards")
 @Data
@@ -37,4 +40,26 @@ public class Board {
     private final List<CardType> trash;
 
     private final BoardState boardState;
+
+    @Setter
+    @Getter
+    private ExchangeHandler exchangeHandler;
+    @Setter
+    @Getter
+    private DrawHandler drawHandler;
+    @Setter
+    @Getter
+    private DiscardHandler discardHandler;
+    @Setter
+    @Getter
+    private PlayHandler playHandler;
+    @Setter
+    @Getter
+    private DefendHandler defendHandler;
+    @Setter
+    @Getter
+    private ViewCardsHandler viewCardsHandler;
+    @Setter
+    @Getter
+    private PlayConfirmHandler playConfirmHandler;
 }

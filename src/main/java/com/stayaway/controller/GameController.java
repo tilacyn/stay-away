@@ -1,17 +1,8 @@
 package com.stayaway.controller;
 
-import java.net.URI;
-import java.security.Principal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import com.stayaway.dao.model.Board;
 import com.stayaway.exception.StayAwayException;
 import com.stayaway.request.CreateGameRequest;
-import com.stayaway.request.DiscardRequest;
-import com.stayaway.request.ExchangeRequest;
-import com.stayaway.request.PlayRequest;
 import com.stayaway.response.BoardResponse;
 import com.stayaway.response.GameResponse;
 import com.stayaway.response.GameResponseFactory;
@@ -22,11 +13,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
+import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class GameController {
@@ -96,31 +89,6 @@ public class GameController {
         return ResponseEntity.created(URI.create(location)).build();
     }
 
-    @PostMapping("/v1/game/{gameID}/draw")
-    public ResponseEntity<Void> draw(@PathVariable String gameID, Principal principal) {
-        return ResponseEntity.ok().build();
-    }
-
-    @PostMapping("/v1/game/{gameID}/play")
-    public ResponseEntity<Void> play(@PathVariable String gameID,
-                                     @RequestBody PlayRequest request,
-                                     Principal principal) {
-        return ResponseEntity.ok().build();
-    }
-
-    @PostMapping("/v1/game/{gameID}/discard")
-    public ResponseEntity<Void> discard(@PathVariable String gameID,
-                                        @RequestBody DiscardRequest request,
-                                        Principal principal) {
-        return ResponseEntity.ok().build();
-    }
-
-    @PostMapping("/v1/game/{gameID}/exchange")
-    public ResponseEntity<Void> exchange(@PathVariable String gameID,
-                                         @RequestBody ExchangeRequest request,
-                                         Principal principal) {
-        return ResponseEntity.ok().build();
-    }
 
     @GetMapping("/v1/game/{gameId}/board")
     @ResponseBody

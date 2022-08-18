@@ -1,4 +1,4 @@
-package com.stayaway.manager;
+package com.stayaway.core;
 
 
 import com.stayaway.dao.model.Board;

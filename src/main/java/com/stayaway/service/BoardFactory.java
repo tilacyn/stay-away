@@ -1,10 +1,8 @@
 package com.stayaway.service;
 
-import java.util.stream.Collectors;
-
+import com.stayaway.core.BasicCardsDistributor;
 import com.stayaway.dao.model.Board;
 import com.stayaway.dao.model.Game;
-import com.stayaway.manager.BasicCardsDistributor;
 import com.stayaway.model.board.Direction;
 import com.stayaway.model.board.player.Player;
 import com.stayaway.model.board.player.PlayerType;
@@ -12,6 +10,8 @@ import com.stayaway.utils.PlayerUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.stream.Collectors;
 
 class BoardFactory {
     private final Logger logger = LoggerFactory.getLogger(BoardFactory.class);
