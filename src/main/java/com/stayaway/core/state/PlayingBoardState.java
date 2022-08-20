@@ -7,7 +7,9 @@ import com.stayaway.core.handler.DefendHandler;
 import com.stayaway.core.handler.PlayConfirmHandler;
 import com.stayaway.core.handler.ViewCardsHandler;
 import com.stayaway.dao.model.Board;
+import com.stayaway.model.board.state.BoardStatus;
 
+// TODO
 public class PlayingBoardState implements BoardState, DefendHandler, ViewCardsHandler, PlayConfirmHandler {
     private Board board;
 
@@ -27,6 +29,11 @@ public class PlayingBoardState implements BoardState, DefendHandler, ViewCardsHa
     }
 
     @Override
+    public BoardStatus getStatus() {
+        return BoardStatus.PLAYING_CARD;
+    }
+
+    @Override
     public boolean checkPreconditionsFulfilled() {
         return false;
     }
@@ -36,9 +43,12 @@ public class PlayingBoardState implements BoardState, DefendHandler, ViewCardsHa
         return null;
     }
 
-    public void registerHandlers() {
+    @Override
+    public void registerHandlers(Board board) {
         board.setPlayConfirmHandler(this);
         board.setDefendHandler(this);
         board.setViewCardsHandler(this);
+        this.board = board;
     }
+
 }

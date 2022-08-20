@@ -4,5 +4,5 @@ import lombok.Data;
 
 @Data
 public class DrawAction {
-    private String login;
+    private final String login;
 }
