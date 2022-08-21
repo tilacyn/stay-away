@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="/boardPage.css">
     <link rel="stylesheet" href="/common.css">
     <title>Stay Away</title>
+    <script src="/board.js" defer></script>
 </head>
 <body>
 
@@ -14,18 +15,17 @@
 <div sec:authorize="isAuthenticated()" class="loggedInAs">
     Authenticated as <span sec:authentication="name"></span></div>
 
+<div>
+    <button onclick="drawCardFromDeck()"> Draw Card </button>
+</div>
+
+
 <div class="playArea">
     <div class="gameTable"></div>
 
     <div class="mainPlayerHand">
         <table>
-            <tbody>
-            <tr>
-                <td class="mainPlayerCard"><img src="/flamethrower.png" alt="N/A" class="mainPlayerCard"></td>
-                <td class="mainPlayerCard"><img src="/suspicious.png" alt="N/A" class="mainPlayerCard"></td>
-                <td class="mainPlayerCard"><img src="/axe.png" alt="N/A" class="mainPlayerCard"></td>
-                <td class="mainPlayerCard"><img src="/analysis.png" alt="N/A" class="mainPlayerCard"></td>
-            </tr>
+            <tbody class="mainPlayerHandTBody">
             </tbody>
         </table>
     </div>
