@@ -3,6 +3,7 @@ package com.stayaway.core.state;
 import com.stayaway.core.action.DrawAction;
 import com.stayaway.core.handler.DrawHandler;
 import com.stayaway.dao.model.Board;
+import com.stayaway.exception.StayAwayException;
 import com.stayaway.model.board.state.BoardStatus;
 
 public class DrawingBoardState implements BoardState, DrawHandler {
@@ -11,6 +12,11 @@ public class DrawingBoardState implements BoardState, DrawHandler {
 
     @Override
     public void draw(DrawAction action) {
+        String currentPlayerLogin = board.getCurrentPlayer().getLogin();
+        String actionLogin = action.getLogin();
+        if (!currentPlayerLogin.equals(actionLogin)) {
+            throw ExceptionUtils.playerActionNotExpected(currentPlayerLogin, actionLogin);
+        }
         drawRequested = true;
     }
 
