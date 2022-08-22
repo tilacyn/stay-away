@@ -1,10 +1,10 @@
 package com.stayaway.response;
 
-import com.stayaway.model.Game;
+import java.util.Set;
+
+import com.stayaway.dao.model.Game;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-
-import java.util.Set;
 
 @Data
 @AllArgsConstructor

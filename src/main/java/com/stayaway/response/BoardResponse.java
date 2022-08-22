@@ -1,11 +1,11 @@
 package com.stayaway.response;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.stayaway.dao.model.Card;
+import com.stayaway.model.cards.CardType;
 import lombok.Data;
 import org.springframework.lang.Nullable;
-
-import java.util.List;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -17,8 +17,8 @@ public class BoardResponse {
     private final String currentPlayerUserID;
     private final PlayerAction playerAction;
     @Nullable
-    private final Card cardBeingPlayed;
-    private final List<Card> cards;
+    private final CardType cardBeingPlayed;
+    private final List<CardType> cards;
     // todo get if from game collection
     private final String name;
 }

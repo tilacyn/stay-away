@@ -1,59 +1,57 @@
 package com.stayaway.dao.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.stayaway.core.handler.*;
+import com.stayaway.core.state.BoardState;
+import com.stayaway.model.board.Direction;
+import com.stayaway.model.board.player.Player;
+import com.stayaway.model.cards.CardType;
 import lombok.Builder;
 import lombok.Data;
-import lombok.ToString;
+import org.bson.codecs.pojo.annotations.BsonIgnore;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.List;
 
 @Document(collection = "boards")
 @Data
-@Builder
-@ToString
-//TODO gameId_stage index
-@CompoundIndex(name = "id_stage", def = "{'id' : 1, 'stage': 1}", background = true)
+@Builder(toBuilder = true)
+@CompoundIndex(name = "gameId_stage", def = "{'gameId' : 1, 'stage': 1}", background = true)
 public class Board {
     @Id
     private final String id;
 
     private final String gameId;
 
-    private final List<Player> players;
-
-    //stage != turn (looks like turn ~= stage / 3)
     private final int stage;
 
     private final int turn;
 
-    private final int currentPlayer;
+    @Field("players")
+    private final Player currentPlayer;
 
-    private final Deck deck;
+    private final Direction direction;
 
-    private final MoveInProgress currentMove;
+    private final List<CardType> deck;
 
-    @Data
-    public static class Player {
-        private final String login;
-        private final PlayerType type;
-        private final List<Card> cards;
+    private final List<CardType> trash;
 
-        @JsonIgnore
-        public boolean canSeeTheThing() {
-            return PlayerType.THE_THING.equals(type) ||
-                    PlayerType.INFECTED.equals(type) ||
-                    PlayerType.DEAD.equals(type);
-        }
-    }
+    private final BoardState boardState;
 
-    public enum PlayerType {
-        THE_THING,
-        INFECTED,
-        HUMAN,
-        DEAD
-    }
-
+    @BsonIgnore
+    private ExchangeHandler exchangeHandler;
+    @BsonIgnore
+    private DrawHandler drawHandler;
+    @BsonIgnore
+    private DiscardHandler discardHandler;
+    @BsonIgnore
+    private PlayHandler playHandler;
+    @BsonIgnore
+    private DefendHandler defendHandler;
+    @BsonIgnore
+    private ConfirmHandler viewCardsHandler;
+    @BsonIgnore
+    private PlayConfirmHandler playConfirmHandler;
 }

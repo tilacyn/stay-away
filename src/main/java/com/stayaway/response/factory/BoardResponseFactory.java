@@ -1,15 +1,14 @@
 package com.stayaway.response.factory;
 
+import java.util.stream.Collectors;
+
 import com.stayaway.dao.model.Board;
-import com.stayaway.dao.model.Card;
-import com.stayaway.dao.model.User;
+import com.stayaway.model.board.player.Player;
+import com.stayaway.model.cards.CardType;
 import com.stayaway.response.BoardResponse;
 import com.stayaway.response.PlayerAction;
-import com.stayaway.service.PlayerUtils;
+import com.stayaway.utils.PlayerUtils;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 public class BoardResponseFactory {
@@ -21,11 +20,14 @@ public class BoardResponseFactory {
     }
 
     //todo implement
-    public BoardResponse buildReponse(Board board, List<User> boardPlayers, User user) {
+    public BoardResponse buildResponse(Board board, String user) {
         return new BoardResponse(
-                boardPlayers.stream().map(playerResponseFactory::buildProto).collect(Collectors.toList()),
+                PlayerUtils.getPlayersList(board).stream()
+                        .map(Player::getLogin)
+                        .map(playerResponseFactory::buildResponse)
+                        .collect(Collectors.toList()),
                 getTheThingUserId(board, user),
-                PlayerUtils.getCurrentPlayer(board).getLogin(),
+                board.getCurrentPlayer().getLogin(),
 
                 getCurrentPlayerAction(board, user),
                 getCurrentCardToBePlaying(board),
@@ -35,13 +37,13 @@ public class BoardResponseFactory {
     }
 
     //todo implement
-    private PlayerAction getCurrentPlayerAction(Board board, User user) {
+    private PlayerAction getCurrentPlayerAction(Board board, String user) {
         return PlayerAction.PENDING;
     }
 
     //todo implement
-    private Card getCurrentCardToBePlaying(Board board) {
-        return Card.ANALYSIS;
+    private CardType getCurrentCardToBePlaying(Board board) {
+        return CardType.ANALYSIS;
     }
 
     //todo implement
@@ -49,8 +51,8 @@ public class BoardResponseFactory {
         return "gameName";
     }
 
-    private String getTheThingUserId(Board board, User user) {
-        Board.Player player = PlayerUtils.getPlayerByUser(board, user);
+    private String getTheThingUserId(Board board, String user) {
+        Player player = PlayerUtils.getPlayerByUser(board, user);
         return player.canSeeTheThing() ? PlayerUtils.getTheThing(board).getLogin() : null;
     }
 }

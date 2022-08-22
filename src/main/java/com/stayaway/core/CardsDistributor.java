@@ -1,4 +1,4 @@
-package com.stayaway.service;
+package com.stayaway.core;
 
 // TODO
 public interface CardsDistributor {
