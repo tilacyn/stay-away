@@ -3,6 +3,6 @@ package com.stayaway.core.action;
 import lombok.Data;
 
 @Data
-public class ViewCardsAction {
+public class ConfirmAction {
     private String login;
 }

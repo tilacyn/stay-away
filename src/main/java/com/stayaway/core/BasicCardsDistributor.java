@@ -12,31 +12,28 @@ import java.util.stream.Stream;
 // todo do not include infected into player's hands
 // todo map users number into cards counts
 public class BasicCardsDistributor implements CardsDistributor {
-    private static final Map<CardType, Integer> CARDS_COUNT = new HashMap<>();
+    private static final Map<CardType, Integer> CARDS_COUNT = Map.ofEntries(
+            Map.entry(CardType.FLAMETHROWER, 5),
+            Map.entry(CardType.ANALYSIS, 3),
+            Map.entry(CardType.AXE, 2),
+            Map.entry(CardType.YOU_BETTER_RUN, 5),
+            Map.entry(CardType.BARRED_DOOR, 3),
+            Map.entry(CardType.NO_BARBECUE, 3),
+            Map.entry(CardType.IM_COMFORTABLE, 3),
+            Map.entry(CardType.SUSPICIOUS, 8),
+            Map.entry(CardType.CHANGE_PLACES, 5),
+            Map.entry(CardType.NO_THANKS, 4),
+            Map.entry(CardType.RESOLUTE, 5),
+            Map.entry(CardType.SCARY, 4),
+            Map.entry(CardType.WATCH_YOUR_BACK, 2),
+            Map.entry(CardType.QUARANTINE, 2),
+            Map.entry(CardType.MISSED, 3),
+            Map.entry(CardType.SEDUCTION, 7),
+            Map.entry(CardType.INFECTED, 20)
+    );
     private static final String NOT_ENOUGH_CARDS_MESSAGE = "not enough cards (%d) to distribute among players (%d)";
 
     private final Logger logger = LoggerFactory.getLogger(BasicCardsDistributor.class);
-
-    static {
-        CARDS_COUNT.put(CardType.FLAMETHROWER, 5);
-        CARDS_COUNT.put(CardType.ANALYSIS, 3);
-        CARDS_COUNT.put(CardType.AXE, 2);
-        CARDS_COUNT.put(CardType.YOU_BETTER_RUN, 5);
-        CARDS_COUNT.put(CardType.BARRED_DOOR, 3);
-        CARDS_COUNT.put(CardType.NO_BARBECUE, 3);
-        CARDS_COUNT.put(CardType.IM_COMFORTABLE, 3);
-        CARDS_COUNT.put(CardType.SUSPICIOUS, 8);
-        CARDS_COUNT.put(CardType.CHANGE_PLACES, 5);
-        CARDS_COUNT.put(CardType.NO_THANKS, 4);
-        CARDS_COUNT.put(CardType.RESOLUTE, 5);
-        CARDS_COUNT.put(CardType.SCARY, 4);
-        CARDS_COUNT.put(CardType.WATCH_YOUR_BACK, 2);
-        CARDS_COUNT.put(CardType.QUARANTINE, 2);
-        CARDS_COUNT.put(CardType.MISSED, 3);
-        CARDS_COUNT.put(CardType.SEDUCTION, 7);
-        CARDS_COUNT.put(CardType.INFECTED, 20);
-    }
-
     private final List<String> players;
     private final Map<String, List<CardType>> playersCards = new HashMap<>();
     private final List<CardType> deck = new ArrayList<>();

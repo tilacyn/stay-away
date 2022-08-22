@@ -2,13 +2,13 @@ package com.stayaway.core.state;
 
 import com.stayaway.core.action.DefendAction;
 import com.stayaway.core.action.PlayConfirmAction;
-import com.stayaway.core.action.ViewCardsAction;
+import com.stayaway.core.action.ConfirmAction;
 import com.stayaway.core.handler.DefendHandler;
 import com.stayaway.core.handler.PlayConfirmHandler;
-import com.stayaway.core.handler.ViewCardsHandler;
+import com.stayaway.core.handler.ConfirmHandler;
 import com.stayaway.dao.model.Board;
 
-public class PlayingBoardState implements BoardState, DefendHandler, ViewCardsHandler, PlayConfirmHandler {
+public class PlayingBoardState implements BoardState, DefendHandler, ConfirmHandler, PlayConfirmHandler {
     private Board board;
 
     @Override
@@ -17,7 +17,7 @@ public class PlayingBoardState implements BoardState, DefendHandler, ViewCardsHa
     }
 
     @Override
-    public void viewCards(ViewCardsAction action) {
+    public void confirm(ConfirmAction action) {
 
     }
 

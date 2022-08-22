@@ -51,13 +51,8 @@ public class GameplayController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/v1/game/{gameID}/confirmPlay")
-    public ResponseEntity<Void> confirmPlay(@PathVariable String gameID, Principal principal) {
-        return ResponseEntity.ok().build();
-    }
-
-    @PostMapping("/v1/game/{gameID}/viewCards")
-    public ResponseEntity<Void> viewCards(@PathVariable String gameID, Principal principal) {
+    @PostMapping("/v1/game/{gameID}/confirm")
+    public ResponseEntity<Void> confirm(@PathVariable String gameID, Principal principal) {
         return ResponseEntity.ok().build();
     }
 }
