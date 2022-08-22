@@ -62,7 +62,7 @@ public class GameplayManager {
 
     public void confirm(ConfirmAction action, String gameId) {
         process(gameId, board -> {
-            var handler = Optional.ofNullable(board.getViewCardsHandler())
+            var handler = Optional.ofNullable(board.getConfirmHandler())
                     .orElseThrow(UnsupportedOperationException::new);
             handler.confirm(action);
         });

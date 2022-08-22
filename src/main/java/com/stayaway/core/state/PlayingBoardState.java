@@ -1,16 +1,14 @@
 package com.stayaway.core.state;
 
-import com.stayaway.core.action.DefendAction;
-import com.stayaway.core.action.PlayConfirmAction;
 import com.stayaway.core.action.ConfirmAction;
-import com.stayaway.core.handler.DefendHandler;
-import com.stayaway.core.handler.PlayConfirmHandler;
+import com.stayaway.core.action.DefendAction;
 import com.stayaway.core.handler.ConfirmHandler;
+import com.stayaway.core.handler.DefendHandler;
 import com.stayaway.dao.model.Board;
 import com.stayaway.model.board.state.BoardStatus;
 
 // TODO
-public class PlayingBoardState implements BoardState, DefendHandler, ConfirmHandler, PlayConfirmHandler {
+public class PlayingBoardState implements BoardState, DefendHandler, ConfirmHandler {
     private Board board;
 
     @Override
@@ -23,10 +21,6 @@ public class PlayingBoardState implements BoardState, DefendHandler, ConfirmHand
 
     }
 
-    @Override
-    public void confirm(PlayConfirmAction action) {
-
-    }
 
     @Override
     public BoardStatus getStatus() {
@@ -45,9 +39,8 @@ public class PlayingBoardState implements BoardState, DefendHandler, ConfirmHand
 
     @Override
     public void registerHandlers(Board board) {
-        board.setPlayConfirmHandler(this);
         board.setDefendHandler(this);
-        board.setViewCardsHandler(this);
+        board.setConfirmHandler(this);
         this.board = board;
     }
 

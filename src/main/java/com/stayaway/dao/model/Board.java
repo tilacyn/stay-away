@@ -7,8 +7,8 @@ import com.stayaway.model.board.player.Player;
 import com.stayaway.model.cards.CardType;
 import lombok.Builder;
 import lombok.Data;
-import org.bson.codecs.pojo.annotations.BsonIgnore;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.bson.codecs.pojo.annotations.BsonIgnore;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -53,9 +53,7 @@ public class Board {
     @BsonIgnore
     private DefendHandler defendHandler;
     @BsonIgnore
-    private ConfirmHandler viewCardsHandler;
-    @BsonIgnore
-    private PlayConfirmHandler playConfirmHandler;
+    private ConfirmHandler confirmHandler;
 
     public Board copy() {
         return Board.builder()
