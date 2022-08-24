@@ -7,7 +7,6 @@ import com.stayaway.model.board.player.Player;
 import com.stayaway.model.cards.CardType;
 import lombok.Builder;
 import lombok.Data;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.bson.codecs.pojo.annotations.BsonIgnore;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
@@ -54,19 +53,6 @@ public class Board {
     private DefendHandler defendHandler;
     @BsonIgnore
     private ConfirmHandler confirmHandler;
-
-    public Board copy() {
-        return Board.builder()
-                .id(RandomStringUtils.randomAlphabetic(10))
-                .currentPlayer(currentPlayer)
-                .trash(trash)
-                .deck(deck)
-                .direction(direction)
-                .turn(turn)
-                .stage(stage)
-                .gameId(gameId)
-                .build();
-    }
 
     public void registerHandlers() {
         boardState.registerHandlers(this);

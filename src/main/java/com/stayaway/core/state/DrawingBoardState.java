@@ -3,7 +3,7 @@ package com.stayaway.core.state;
 import com.stayaway.core.action.DrawAction;
 import com.stayaway.core.handler.DrawHandler;
 import com.stayaway.dao.model.Board;
-import com.stayaway.exception.StayAwayException;
+import com.stayaway.dao.model.builder.BoardUpdateBuilder;
 import com.stayaway.model.board.state.BoardStatus;
 
 public class DrawingBoardState implements BoardState, DrawHandler {
@@ -32,8 +32,7 @@ public class DrawingBoardState implements BoardState, DrawHandler {
 
     @Override
     public Board transform() {
-        var newBoard = board.copy();
-        incrementStage(newBoard);
+        var newBoard = new BoardUpdateBuilder(board).build();
         performDraw(newBoard);
         var newState = new ChoosingCardBoardState();
         newBoard.setBoardState(newState);
@@ -44,10 +43,6 @@ public class DrawingBoardState implements BoardState, DrawHandler {
         var deck = newBoard.getDeck();
         var deckTopCard = deck.remove(0);
         newBoard.getCurrentPlayer().getCards().add(0, deckTopCard);
-    }
-
-    private void incrementStage(Board newBoard) {
-        newBoard.setStage(board.getStage() + 1);
     }
 
     @Override

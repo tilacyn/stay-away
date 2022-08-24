@@ -1,7 +1,7 @@
 package com.stayaway.controller;
 
 import com.stayaway.core.GameplayManager;
-import com.stayaway.core.action.factory.DrawActionFactory;
+import com.stayaway.core.action.DrawAction;
 import com.stayaway.request.DefendRequest;
 import com.stayaway.request.DiscardRequest;
 import com.stayaway.request.ExchangeRequest;
@@ -39,8 +39,7 @@ public class GameplayController {
 
     @PostMapping("/v1/game/{gameId}/draw")
     public ResponseEntity<Void> draw(@PathVariable String gameId, Principal principal) {
-        var action = new DrawActionFactory().create(principal.getName());
-        gameplayManager.draw(action, gameId);
+        gameplayManager.draw(new DrawAction(principal.getName()), gameId);
         return ResponseEntity.ok().build();
     }
 
