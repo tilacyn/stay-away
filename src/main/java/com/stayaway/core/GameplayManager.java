@@ -60,16 +60,15 @@ public class GameplayManager {
         });
     }
 
-    public void viewCards(ViewCardsAction action, String gameId) {
+    public void confirm(ConfirmAction action, String gameId) {
         process(gameId, board -> {
-            var handler = Optional.ofNullable(board.getViewCardsHandler())
+            var handler = Optional.ofNullable(board.getConfirmHandler())
                     .orElseThrow(UnsupportedOperationException::new);
-            handler.viewCards(action);
+            handler.confirm(action);
         });
     }
 
-
-    public void process(String gameID, Consumer<Board> transition) {
+    private void process(String gameID, Consumer<Board> transition) {
         var newBoard = processAndSave(gameID, transition);
         notificationManager.notifyAll(newBoard);
     }
