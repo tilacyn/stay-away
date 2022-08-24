@@ -1,6 +1,7 @@
 package com.stayaway.controller;
 
 import com.stayaway.core.GameplayManager;
+import com.stayaway.core.action.DrawAction;
 import com.stayaway.request.DefendRequest;
 import com.stayaway.request.DiscardRequest;
 import com.stayaway.request.ExchangeRequest;
@@ -26,33 +27,35 @@ public class GameplayController {
         this.gameplayManager = gameplayManager;
     }
 
-    @PostMapping("/v1/game/{gameID}/play")
-    public ResponseEntity<Void> play(@PathVariable String gameID, @RequestBody PlayRequest request, Principal principal) {
+    @PostMapping("/v1/game/{gameId}/play")
+    public ResponseEntity<Void> play(@PathVariable String gameId, @RequestBody PlayRequest request, Principal principal) {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/v1/game/{gameID}/discard")
-    public ResponseEntity<Void> discard(@PathVariable String gameID, @RequestBody DiscardRequest request, Principal principal) {
+    @PostMapping("/v1/game/{gameId}/discard")
+    public ResponseEntity<Void> discard(@PathVariable String gameId, @RequestBody DiscardRequest request, Principal principal) {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/v1/game/{gameID}/draw")
-    public ResponseEntity<Void> draw(@PathVariable String gameID, Principal principal) {
+    @PostMapping("/v1/game/{gameId}/draw")
+    public ResponseEntity<Void> draw(@PathVariable String gameId, Principal principal) {
+        gameplayManager.draw(new DrawAction(principal.getName()), gameId);
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/v1/game/{gameID}/defend")
-    public ResponseEntity<Void> defend(@PathVariable String gameID, @RequestBody DefendRequest request, Principal principal) {
+    @PostMapping("/v1/game/{gameId}/defend")
+    public ResponseEntity<Void> defend(@PathVariable String gameId, @RequestBody DefendRequest request, Principal principal) {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/v1/game/{gameID}/exchange")
-    public ResponseEntity<Void> exchange(@PathVariable String gameID, @RequestBody ExchangeRequest request, Principal principal) {
+    @PostMapping("/v1/game/{gameId}/exchange")
+    public ResponseEntity<Void> exchange(@PathVariable String gameId, @RequestBody ExchangeRequest request, Principal principal) {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/v1/game/{gameID}/confirm")
-    public ResponseEntity<Void> confirm(@PathVariable String gameID, Principal principal) {
+
+    @PostMapping("/v1/game/{gameId}/confirm")
+    public ResponseEntity<Void> confirm(@PathVariable String gameId, Principal principal) {
         return ResponseEntity.ok().build();
     }
 }

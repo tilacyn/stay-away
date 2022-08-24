@@ -20,12 +20,13 @@ import java.util.List;
 @Builder(toBuilder = true)
 @CompoundIndex(name = "gameId_stage", def = "{'gameId' : 1, 'stage': 1}", background = true)
 public class Board {
+
     @Id
     private final String id;
 
     private final String gameId;
 
-    private final int stage;
+    private int stage;
 
     private final int turn;
 
@@ -38,7 +39,7 @@ public class Board {
 
     private final List<CardType> trash;
 
-    private final BoardState boardState;
+    private BoardState boardState;
 
     @BsonIgnore
     private ExchangeHandler exchangeHandler;
@@ -51,7 +52,9 @@ public class Board {
     @BsonIgnore
     private DefendHandler defendHandler;
     @BsonIgnore
-    private ConfirmHandler viewCardsHandler;
-    @BsonIgnore
-    private PlayConfirmHandler playConfirmHandler;
+    private ConfirmHandler confirmHandler;
+
+    public void registerHandlers() {
+        boardState.registerHandlers(this);
+    }
 }

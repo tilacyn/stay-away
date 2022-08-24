@@ -3,6 +3,7 @@ package com.stayaway.core;
 
 import com.stayaway.core.action.*;
 import com.stayaway.dao.model.Board;
+import com.stayaway.exception.StayAwayException;
 import com.stayaway.service.GameService;
 import org.springframework.stereotype.Component;
 
@@ -38,7 +39,7 @@ public class GameplayManager {
     public void draw(DrawAction action, String gameId) {
         process(gameId, board -> {
             var handler = Optional.ofNullable(board.getDrawHandler())
-                    .orElseThrow(UnsupportedOperationException::new);
+                    .orElseThrow(() -> gameplayActionNotAllowed(board, "draw"));
             handler.draw(action);
         });
     }
@@ -61,7 +62,7 @@ public class GameplayManager {
 
     public void confirm(ConfirmAction action, String gameId) {
         process(gameId, board -> {
-            var handler = Optional.ofNullable(board.getViewCardsHandler())
+            var handler = Optional.ofNullable(board.getConfirmHandler())
                     .orElseThrow(UnsupportedOperationException::new);
             handler.confirm(action);
         });
@@ -75,6 +76,7 @@ public class GameplayManager {
     //    TRANSACTIONAL SERIALIZABLE
     public Board processAndSave(String gameID, Consumer<Board> changeState) {
         Board board = gameService.getCurrentBoard(gameID);
+        board.registerHandlers();
         changeState.accept(board);
 
         var state = board.getBoardState();
@@ -88,4 +90,8 @@ public class GameplayManager {
         return board;
     }
 
+    private static StayAwayException gameplayActionNotAllowed(Board b, String actionName) {
+        var status = b.getBoardState().getStatus();
+        return StayAwayException.conflict(String.format("method %s is not allowed, current status: %s", actionName, status));
+    }
 }

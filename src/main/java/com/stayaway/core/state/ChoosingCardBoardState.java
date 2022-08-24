@@ -5,7 +5,9 @@ import com.stayaway.core.action.PlayAction;
 import com.stayaway.core.handler.DiscardHandler;
 import com.stayaway.core.handler.PlayHandler;
 import com.stayaway.dao.model.Board;
+import com.stayaway.model.board.state.BoardStatus;
 
+// TODO
 public class ChoosingCardBoardState implements BoardState, PlayHandler, DiscardHandler {
     private Board board;
 
@@ -20,6 +22,11 @@ public class ChoosingCardBoardState implements BoardState, PlayHandler, DiscardH
     }
 
     @Override
+    public BoardStatus getStatus() {
+        return BoardStatus.CHOOSING_CARD_TO_PLAY_OR_DISCARD;
+    }
+
+    @Override
     public boolean checkPreconditionsFulfilled() {
         return false;
     }
@@ -29,8 +36,9 @@ public class ChoosingCardBoardState implements BoardState, PlayHandler, DiscardH
         return null;
     }
 
-    public void registerHandlers() {
+    public void registerHandlers(Board board) {
         board.setPlayHandler(this);
         board.setDiscardHandler(this);
+        this.board = board;
     }
 }

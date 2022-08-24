@@ -1,6 +1,7 @@
 package com.stayaway.service;
 
 import com.stayaway.core.BasicCardsDistributor;
+import com.stayaway.core.state.DrawingBoardState;
 import com.stayaway.dao.model.Board;
 import com.stayaway.dao.model.Game;
 import com.stayaway.model.board.Direction;
@@ -36,6 +37,7 @@ class BoardFactory {
                 .turn(0)
                 .id(RandomStringUtils.randomAlphabetic(10))
                 .gameId(game.getId())
+                .boardState(new DrawingBoardState())
                 .build();
     }
 }
