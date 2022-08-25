@@ -10,9 +10,9 @@ table {
 .mainPlayerHand {
     margin-left: auto;
     margin-right: auto;
-    width: 400px;
 
-    margin-top: 50px;
+    position: relative;
+    top: 100px;
 }
 
 .mainPlayerCard {
@@ -38,6 +38,8 @@ table {
     background: darkgreen;
     border-color: #8b4513;
     border-width: 10px;
+
+    position: relative;
 
     margin-left: auto;
     margin-right: auto;
