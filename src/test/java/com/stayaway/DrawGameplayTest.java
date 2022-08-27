@@ -1,9 +1,7 @@
 package com.stayaway;
 
-import com.stayaway.core.GameplayManager;
 import com.stayaway.dao.model.User;
 import com.stayaway.request.CreateGameRequest;
-import com.stayaway.service.GameService;
 import com.stayaway.service.UserService;
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
@@ -29,20 +27,20 @@ public class DrawGameplayTest {
     @Container
     static MongoDBContainer mongoDBContainer = new MongoDBContainer("mongo:4.4.2");
 
+    @Autowired
+    public DrawGameplayTest(MockMvc mvc, UserService userService) {
+        this.testMvc = new TestMvc(mvc);
+        this.userService = userService;
+    }
+
     @DynamicPropertySource
     static void setProperties(DynamicPropertyRegistry registry) {
         registry.add("spring.data.mongodb.uri", mongoDBContainer::getReplicaSetUrl);
     }
 
 
-    @Autowired
-    private MockMvc mvc;
-    @Autowired
-    private GameService gameService;
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private GameplayManager gameplayManager;
+    private final TestMvc testMvc;
+    private final UserService userService;
 
     @Before
     public void saveUsers() {
@@ -55,7 +53,6 @@ public class DrawGameplayTest {
     @Test
     public void should_createAndDrawMvc() throws Exception {
         String login = "Alice";
-        var testMvc = new TestMvc(mvc);
 
         var createGameRequest = new CreateGameRequest();
         createGameRequest.setName("game1");
@@ -71,7 +68,6 @@ public class DrawGameplayTest {
     public void check_drawPermissions() throws Exception {
         String player1 = "Alice";
         String player2 = "Bob";
-        var testMvc = new TestMvc(mvc);
 
         var createGameRequest = new CreateGameRequest();
         createGameRequest.setName("game1");

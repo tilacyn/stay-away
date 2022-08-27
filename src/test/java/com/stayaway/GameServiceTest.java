@@ -33,18 +33,22 @@ public class GameServiceTest {
     @Container
     static MongoDBContainer mongoDBContainer = new MongoDBContainer("mongo:4.4.2");
 
+    @Autowired
+    public GameServiceTest(MockMvc mvc, GameService gameService, UserService userService) {
+        this.testMvc = new TestMvc(mvc);
+        this.gameService = gameService;
+        this.userService = userService;
+    }
+
     @DynamicPropertySource
     static void setProperties(DynamicPropertyRegistry registry) {
         registry.add("spring.data.mongodb.uri", mongoDBContainer::getReplicaSetUrl);
     }
 
 
-    @Autowired
-    private MockMvc mvc;
-    @Autowired
-    private GameService gameService;
-    @Autowired
-    private UserService userService;
+    private final TestMvc testMvc;
+    private final GameService gameService;
+    private final UserService userService;
 
 
     @Before
@@ -73,7 +77,6 @@ public class GameServiceTest {
     @Test
     public void should_createAndGetCurrentBoardMvc() throws Exception {
         String login = "Alice";
-        var testMvc = new TestMvc(mvc);
 
         var createGameRequest = new CreateGameRequest();
         createGameRequest.setName("game1");
