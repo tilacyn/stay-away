@@ -1,8 +1,5 @@
 package com.stayaway.service;
 
-import java.util.List;
-import java.util.Set;
-
 import com.stayaway.dao.model.Board;
 import com.stayaway.dao.model.Game;
 import com.stayaway.dao.repository.BoardRepository;
@@ -13,16 +10,22 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Set;
+
 @Service
 public class GameService {
     private final GameRepository gameRepository;
     private final BoardRepository boardRepository;
 
+    private final BoardFactory boardFactory;
+
     private final Logger logger = LoggerFactory.getLogger(GameService.class);
 
-    public GameService(GameRepository gameRepository, BoardRepository boardRepository) {
+    public GameService(GameRepository gameRepository, BoardRepository boardRepository, BoardFactory boardFactory) {
         this.gameRepository = gameRepository;
         this.boardRepository = boardRepository;
+        this.boardFactory = boardFactory;
     }
 
     public List<Game> listGames() {
@@ -86,7 +89,7 @@ public class GameService {
      * @param game game associated with board
      */
     private void createBoard(Game game) {
-        var board = new BoardFactory().create(game);
+        var board = boardFactory.create(game);
         saveBoard(board);
     }
 }

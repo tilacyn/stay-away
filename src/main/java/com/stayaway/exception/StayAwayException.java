@@ -129,4 +129,9 @@ public class StayAwayException extends RuntimeException {
                 ", httpStatus=" + httpStatus +
                 '}';
     }
+
+    @Override
+    public String getMessage() {
+        return payload.getMessage();
+    }
 }
