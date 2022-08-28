@@ -25,7 +25,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class DrawGameplayTest {
 
     @Container
-    static MongoDBContainer mongoDBContainer = new MongoDBContainer("mongo:4.4.2");
+    static MongoDBContainer mongoDBContainer = new MongoDBContainer(Constants.MONGO_IMAGE);
 
     @Autowired
     public DrawGameplayTest(MockMvc mvc, UserService userService) {
@@ -35,7 +35,7 @@ public class DrawGameplayTest {
 
     @DynamicPropertySource
     static void setProperties(DynamicPropertyRegistry registry) {
-        registry.add("spring.data.mongodb.uri", mongoDBContainer::getReplicaSetUrl);
+        registry.add(Constants.SPRING_DATA_MONGODB_URI_PROPERTY, mongoDBContainer::getReplicaSetUrl);
     }
 
 
