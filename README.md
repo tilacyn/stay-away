@@ -45,3 +45,12 @@ db.createUser({ user: "admin", pwd: "admin", roles: [ "dbOwner" ] })
 ### run
 
 `java -jar target/stay-away-0.0.1-SNAPSHOT.jar`
+
+### test
+
+Для того, чтобы тесты работали, надо иметь установленный докер и подтянуть два образа:
+
+```
+docker pull mongo:4.4.2
+docker pull testcontainers/ryuk:0.3.0
+```
