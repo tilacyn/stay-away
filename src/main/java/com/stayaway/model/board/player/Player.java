@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.stayaway.exception.StayAwayException;
 import com.stayaway.model.board.Direction;
 import com.stayaway.model.cards.CardType;
 import lombok.Data;
@@ -43,6 +44,21 @@ public class Player {
             right = player;
             player.left = this;
         }
+    }
+
+    @JsonIgnore
+    public Player getByLogin(String login) {
+        if (Objects.equals(this.login, login)) {
+            return this;
+        }
+        Player tmp = this.left;
+        while (tmp != this) {
+            if (Objects.equals(tmp.login, login)) {
+                return tmp;
+            }
+            tmp = tmp.left;
+        }
+        throw StayAwayException.notFound(login, StayAwayException.EntityType.PLAYER);
     }
 
     @Override

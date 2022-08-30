@@ -3,5 +3,6 @@ package com.stayaway.model.board;
 
 public enum Direction {
     LEFT,
-    RIGHT
+    RIGHT;
+    public final static Direction DEFAULT = LEFT;
 }
