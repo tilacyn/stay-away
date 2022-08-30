@@ -52,7 +52,7 @@ public class BoardResponseFactory {
     }
 
     private String getTheThingUserId(Board board, String user) {
-        Player player = PlayerUtils.getPlayerByUser(board, user);
+        Player player = PlayerUtils.getPlayerByLogin(board, user);
         return player.canSeeTheThing() ? PlayerUtils.getTheThing(board).getLogin() : null;
     }
 }

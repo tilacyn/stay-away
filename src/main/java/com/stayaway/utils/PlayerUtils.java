@@ -1,7 +1,10 @@
 package com.stayaway.utils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Predicate;
 
 import com.stayaway.dao.model.Board;
 import com.stayaway.exception.StayAwayException;
@@ -12,25 +15,26 @@ import com.stayaway.model.cards.CardType;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
-//todo consider to move these methods to PlayerService
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class PlayerUtils {
 
-    //todo refactor
-    public static Player getPlayerByUser(Board board, String user) throws StayAwayException {
-        return getPlayersList(board).stream().filter(player -> player.getLogin().equals(user)).findFirst()
-                // todo implement spectators mode
-                .orElseThrow(() -> StayAwayException.internalError("No such user[" + user + "] on the board[" + board.getId() + "]"));
+    public static Player getPlayerByLogin(Board board, String login) throws StayAwayException {
+        return getPlayerByLogin(board.getCurrentPlayer(), login);
     }
 
-    //todo refactor
+    public static Player getPlayerByLogin(Player player, String login) {
+        return find(player, p -> p.getLogin().equals(login))
+                // todo implement spectators mode
+                .orElseThrow(() -> StayAwayException.internalError("No such user[" + login + "] on the board"));
+    }
+
     public static Player getTheThing(Board board) throws StayAwayException {
-        return getPlayersList(board).stream().filter(player -> PlayerType.THE_THING.equals(player.getType())).findFirst()
+        return find(board.getCurrentPlayer(), player -> PlayerType.THE_THING.equals(player.getType()))
                 .orElseThrow(() -> StayAwayException.internalError("There is no The Thing on the board[" + board.getId() + "]"));
     }
 
     public static List<CardType> getPlayerCards(Board board, String user) throws StayAwayException {
-        Player player = getPlayerByUser(board, user);
+        Player player = getPlayerByLogin(board, user);
         return player.getCards();
     }
 
@@ -39,14 +43,21 @@ public final class PlayerUtils {
     }
 
     public static List<Player> getPlayersList(Player player, Direction direction) {
-        Player curr = player;
         List<Player> players = new ArrayList<>();
-        while (!curr.getNext(direction).equals(player)) {
-            players.add(curr);
-            curr = curr.getNext(direction);
+        player.forEach(players::add);
+        if (!Direction.INIT.equals(direction)) {
+            Collections.reverse(players);
         }
-        players.add(curr);
         return players;
+    }
+
+    public static Optional<Player> find(Player player, Predicate<Player> predicate) {
+        for (Player current : player) {
+            if (predicate.test(current)) {
+                return Optional.of(current);
+            }
+        }
+        return Optional.empty();
     }
 
     public static Player fromList(List<Player> players, Direction direction) {

@@ -15,7 +15,7 @@ public class PlayerWritingConverter implements Converter<Player, DBObject> {
     @Override
     public DBObject convert(Player player) {
         BasicDBList list = new BasicDBList();
-        PlayerUtils.getPlayersList(player, Direction.RIGHT)
+        PlayerUtils.getPlayersList(player, Direction.INIT)
                 .stream().map(this::playerToObject)
                 .forEach(list::add);
         return list;

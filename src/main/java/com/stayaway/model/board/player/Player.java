@@ -1,15 +1,17 @@
 package com.stayaway.model.board.player;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.stayaway.exception.StayAwayException;
 import com.stayaway.model.board.Direction;
 import com.stayaway.model.cards.CardType;
 import lombok.Data;
 
 @Data
-public class Player {
+public class Player implements Iterable<Player> {
     private final String login;
     private final PlayerType type;
     private final List<CardType> cards;
@@ -45,6 +47,21 @@ public class Player {
         }
     }
 
+    @JsonIgnore
+    public Player getByLogin(String login) {
+        if (Objects.equals(this.login, login)) {
+            return this;
+        }
+        Player tmp = this.left;
+        while (tmp != this) {
+            if (Objects.equals(tmp.login, login)) {
+                return tmp;
+            }
+            tmp = tmp.left;
+        }
+        throw StayAwayException.notFound(login, StayAwayException.EntityType.PLAYER);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -60,5 +77,10 @@ public class Player {
     @Override
     public int hashCode() {
         return Objects.hash(login);
+    }
+
+    @Override
+    public Iterator<Player> iterator() {
+        return new PlayerIterator(this);
     }
 }

@@ -5,6 +5,7 @@ import com.stayaway.core.handler.DrawHandler;
 import com.stayaway.dao.model.Board;
 import com.stayaway.dao.model.builder.BoardUpdateBuilder;
 import com.stayaway.model.board.state.BoardStatus;
+import com.stayaway.model.cards.CardType;
 
 public class DrawingBoardState implements BoardState, DrawHandler {
     private Board board;
@@ -32,17 +33,15 @@ public class DrawingBoardState implements BoardState, DrawHandler {
 
     @Override
     public Board transform() {
-        var newBoard = new BoardUpdateBuilder(board).build();
-        performDraw(newBoard);
-        var newState = new ChoosingCardBoardState();
-        newBoard.setBoardState(newState);
-        return newBoard;
+        BoardUpdateBuilder boardBuilder = new BoardUpdateBuilder(board, new ChoosingCardBoardState());
+        performDraw(boardBuilder);
+        return boardBuilder.build();
     }
 
-    private void performDraw(Board newBoard) {
-        var deck = newBoard.getDeck();
-        var deckTopCard = deck.remove(0);
-        newBoard.getCurrentPlayer().getCards().add(0, deckTopCard);
+    private void performDraw(BoardUpdateBuilder newBoard) {
+        CardType card = newBoard.getTopCard();
+        newBoard.removeTopCard()
+                .addToHand(newBoard.getCurrentPlayer().getLogin(), card);
     }
 
     @Override

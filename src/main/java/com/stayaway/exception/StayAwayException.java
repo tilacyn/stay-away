@@ -120,6 +120,7 @@ public class StayAwayException extends RuntimeException {
         BOARD,
         USER,
         GAME,
+        PLAYER
     }
 
     @Override
