@@ -8,7 +8,9 @@ import com.stayaway.dao.model.Board;
 import com.stayaway.model.board.Direction;
 import com.stayaway.model.board.player.Player;
 import com.stayaway.model.cards.CardType;
+import com.stayaway.utils.PlayerUtils;
 
+@SuppressWarnings("UnusedReturnValue")
 public class BoardUpdateBuilder extends BoardBuilder {
 
     private int turn;
@@ -47,7 +49,7 @@ public class BoardUpdateBuilder extends BoardBuilder {
     }
 
     public BoardUpdateBuilder addToHand(String login, CardType card) {
-        Player player = currentPlayer.getByLogin(login);
+        Player player = PlayerUtils.getPlayerByLogin(currentPlayer, login);
         player.getCards().add(card);
         return this;
     }

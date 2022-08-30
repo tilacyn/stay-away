@@ -9,6 +9,7 @@ import com.stayaway.model.board.Direction;
 import com.stayaway.model.board.player.Player;
 import com.stayaway.model.cards.CardType;
 
+@SuppressWarnings("UnusedReturnValue")
 public class BoardCreateBuilder extends BoardBuilder {
     private int turn;
 
@@ -25,7 +26,7 @@ public class BoardCreateBuilder extends BoardBuilder {
 
     public BoardCreateBuilder(String gameId) {
         super(gameId, 0);
-        direction = Direction.DEFAULT;
+        direction = Direction.INIT;
         turn = 0;
         boardState = new DrawingBoardState();
     }

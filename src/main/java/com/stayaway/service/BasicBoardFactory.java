@@ -43,7 +43,7 @@ public class BasicBoardFactory implements BoardFactory {
         return new BoardCreateBuilder(game.getId())
                 .setDeck(cardsDistributor.getDeck())
                 .setTrash(cardsDistributor.getTrash())
-                .setCurrentPlayer(PlayerUtils.fromList(players, Direction.DEFAULT))
+                .setCurrentPlayer(PlayerUtils.fromList(players, Direction.INIT))
                 .build();
     }
 }

@@ -22,7 +22,7 @@ public class PlayerReadingConverter implements Converter<ArrayList<Document>, Pl
         documents.stream()
                 .map(this::objectToPlayer)
                 .forEach(players::add);
-        return PlayerUtils.fromList(players, Direction.DEFAULT);
+        return PlayerUtils.fromList(players, Direction.INIT);
     }
 
     private Player objectToPlayer(Document document) {

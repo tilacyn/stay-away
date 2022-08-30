@@ -1,5 +1,6 @@
 package com.stayaway.model.board.player;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
@@ -10,7 +11,7 @@ import com.stayaway.model.cards.CardType;
 import lombok.Data;
 
 @Data
-public class Player {
+public class Player implements Iterable<Player> {
     private final String login;
     private final PlayerType type;
     private final List<CardType> cards;
@@ -76,5 +77,10 @@ public class Player {
     @Override
     public int hashCode() {
         return Objects.hash(login);
+    }
+
+    @Override
+    public Iterator<Player> iterator() {
+        return new PlayerIterator(this);
     }
 }
