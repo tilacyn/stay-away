@@ -1,16 +1,16 @@
 package com.stayaway;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import com.stayaway.core.CardsDistributor;
 import com.stayaway.dao.model.Game;
 import com.stayaway.model.board.player.Player;
 import com.stayaway.service.BasicBoardFactory;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Component
 @Primary
