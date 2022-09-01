@@ -49,7 +49,6 @@ public class DiscardGameplayTest {
     }
 
     private final TestMvc testMvc;
-    // todo autowired in saveUsers
     private final UserService userService;
 
     @Before
