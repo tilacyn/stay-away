@@ -1,5 +1,28 @@
 refresh();
 
+var stompClient = null;
+
+connect()
+
+function connect() {
+    var socket = new SockJS('/gs-guide-websocket');
+    stompClient = Stomp.over(socket);
+    stompClient.connect({}, function (frame) {
+        console.log('Connected: ' + frame);
+        stompClient.subscribe('/topic/game/' + getGameId(), function (greeting) {
+            refresh();
+        });
+    });
+}
+
+function disconnect() {
+    if (stompClient !== null) {
+        stompClient.disconnect();
+    }
+    console.log("Disconnected");
+}
+
+
 function drawCardFromDeck() {
     const xhr = new XMLHttpRequest();
     const gameId = getGameId();
@@ -9,8 +32,6 @@ function drawCardFromDeck() {
     if (xhr.status !== 200) {
         alert('failed to draw: ' + xhr.response);
         console.log('failed to draw: ' + xhr.response);
-    } else {
-        refresh();
     }
 }
 
