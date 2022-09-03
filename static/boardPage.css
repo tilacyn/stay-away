@@ -50,3 +50,14 @@ table {
     width: 119px;
     height: 166px;
 }
+
+.maximizedCard {
+    width: 357px;
+    height: 498px;
+}
+
+.cardActionsPanel {
+    position: absolute;
+    top: 100px;
+    right: 50px;
+}

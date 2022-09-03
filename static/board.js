@@ -30,3 +30,16 @@ for (let i = 0; i < players.length; i++) {
 
     tableElement.appendChild(userIcon);
 }
+
+cards = document.getElementsByClassName('mainPlayerCard')
+maximizedCardWrapper = document.getElementsByClassName('maximizedCardWrapper')[0]
+
+
+
+for (let i = 0; i < cards.length; i++) {
+    let card = cards[i];
+    card.onclick = function() {
+        image = card.getAttribute('src');
+        maximizedCardWrapper.innerHTML = `<img src="${image}" alt="N/A" class="maximizedCard">`
+    }
+}
