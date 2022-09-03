@@ -1,7 +1,6 @@
 package com.stayaway;
 
 import com.stayaway.dao.model.User;
-import com.stayaway.model.cards.CardType;
 import com.stayaway.request.DiscardRequest;
 import com.stayaway.service.UserService;
 import org.junit.Before;
@@ -24,7 +23,6 @@ import static com.stayaway.Constants.ALICE;
 import static com.stayaway.Constants.BOB;
 import static com.stayaway.Constants.DANIEL;
 import static com.stayaway.Constants.ROMA_ELIZAROV;
-import static com.stayaway.Utils.getCardNotInHand;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
@@ -63,9 +61,7 @@ public class DiscardGameplayTest {
         String gameId = Utils.createAndStart(testMvc, login, "game1");
 
         testMvc.performDraw(gameId, login);
-        var boardBefore = testMvc.performGetBoard(gameId, login);
-        CardType toDiscard = boardBefore.getCards().get(0);
-        testMvc.performDiscard(gameId, login, new DiscardRequest(toDiscard));
+        testMvc.performDiscard(gameId, login, new DiscardRequest(0));
         var boardAfter = testMvc.performGetBoard(gameId, login);
         assertThat(boardAfter.getCards()).size().isEqualTo(4);
         assertThat(boardAfter.getCurrentPlayerUserID()).isEqualTo(login);
@@ -78,13 +74,11 @@ public class DiscardGameplayTest {
         String gameId = Utils.createAndStart(testMvc, player1, "game1");
 
         testMvc.performDraw(gameId, player1);
-        var boardBefore = testMvc.performGetBoard(gameId, player1);
-        CardType toDiscard = boardBefore.getCards().get(0);
-        var discardRequest = new DiscardRequest(toDiscard);
-        var notInHandCardDiscardRequest = new DiscardRequest(getCardNotInHand(boardBefore.getCards()));
+        var discardRequest = new DiscardRequest(0);
+        var notEnoughCardsDiscardRequest = new DiscardRequest(7);
 
         testMvc.expectDiscardNotAllowed(gameId, player2, discardRequest);
-        testMvc.expectDiscardNotAllowed(gameId, player1, notInHandCardDiscardRequest);
+        testMvc.expectDiscardNotAllowed(gameId, player1, notEnoughCardsDiscardRequest);
         // todo uncomment when exchanging is implemented
         // testMvc.performDiscard(gameId, player1, discardRequest);
         // testMvc.expectDiscardNotAllowed(gameId, player1, discardRequest);

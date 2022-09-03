@@ -1,7 +1,6 @@
 package com.stayaway.core.state;
 
 import com.stayaway.exception.StayAwayException;
-import com.stayaway.model.cards.CardType;
 
 class ExceptionUtils {
     static StayAwayException playerActionNotExpected(String currentPlayerLogin, String actionLogin) {
@@ -10,9 +9,9 @@ class ExceptionUtils {
         return StayAwayException.conflict(message);
     }
 
-    static StayAwayException noSuchCardInHand(String currentPlayerLogin, CardType card) {
-        String messageTemplate = "no such card [%s] in player's [%s] hand";
-        String message = String.format(messageTemplate, card.toString(), currentPlayerLogin);
+    static StayAwayException notEnoughCardsInHand(int actionCardNumber, int handSize) {
+        String messageTemplate = "there are only %d cards in hand, cannot retrieve card by number %d";
+        String message = String.format(messageTemplate, handSize, actionCardNumber);
         return StayAwayException.conflict(message);
     }
 }

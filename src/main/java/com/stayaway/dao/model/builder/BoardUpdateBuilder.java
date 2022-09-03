@@ -58,9 +58,9 @@ public class BoardUpdateBuilder extends BoardBuilder {
         return new Board(id, gameId, stage, turn, currentPlayer, direction, deck, trash, boardState);
     }
 
-    public BoardUpdateBuilder removeFromHand(String login, CardType card) {
+    public BoardUpdateBuilder removeFromHand(String login, int cardNumber) {
         Player player = PlayerUtils.getPlayerByLogin(currentPlayer, login);
-        player.getCards().remove(card);
+        player.getCards().remove(cardNumber);
         return this;
     }
 

@@ -1,7 +1,6 @@
 package com.stayaway;
 
 import com.stayaway.dao.model.User;
-import com.stayaway.model.cards.CardType;
 import com.stayaway.request.PlayRequest;
 import com.stayaway.service.UserService;
 import org.junit.Before;
@@ -24,7 +23,6 @@ import static com.stayaway.Constants.ALICE;
 import static com.stayaway.Constants.BOB;
 import static com.stayaway.Constants.DANIEL;
 import static com.stayaway.Constants.ROMA_ELIZAROV;
-import static com.stayaway.Utils.getCardNotInHand;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
@@ -63,9 +61,7 @@ public class PlayGameplayTest {
         String gameId = Utils.createAndStart(testMvc, login, "game1");
 
         testMvc.performDraw(gameId, login);
-        var boardBefore = testMvc.performGetBoard(gameId, login);
-        CardType toPlay = boardBefore.getCards().get(0);
-        testMvc.expectPlayStatus(gameId, login, new PlayRequest(toPlay, BOB), 200);
+        testMvc.expectPlayStatus(gameId, login, new PlayRequest(0, BOB), 200);
         var boardAfter = testMvc.performGetBoard(gameId, login);
         assertThat(boardAfter.getCards()).size().isEqualTo(4);
     }
@@ -77,15 +73,13 @@ public class PlayGameplayTest {
         String gameId = Utils.createAndStart(testMvc, player1, "game1");
 
         testMvc.performDraw(gameId, player1);
-        var boardBefore = testMvc.performGetBoard(gameId, player1);
-        CardType toPlay = boardBefore.getCards().get(0);
-        var playRequest = new PlayRequest(toPlay, BOB);
-        var wrongTargetRequest = new PlayRequest(toPlay, "wrong-target");
-        var wrongCardRequest = new PlayRequest(getCardNotInHand(boardBefore.getCards()), BOB);
+        var playRequest = new PlayRequest(0, BOB);
+        var wrongTargetRequest = new PlayRequest(0, "wrong-target");
+        var notEnoughCardsRequest = new PlayRequest(7, BOB);
 
 
         testMvc.expectPlayStatus(gameId, player1, wrongTargetRequest, 400);
-        testMvc.expectPlayStatus(gameId, player1, wrongCardRequest, 409);
+        testMvc.expectPlayStatus(gameId, player1, notEnoughCardsRequest, 409);
         testMvc.expectPlayStatus(gameId, player2, playRequest, 409);
     }
 

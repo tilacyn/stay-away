@@ -7,7 +7,6 @@ import com.stayaway.core.handler.PlayHandler;
 import com.stayaway.dao.model.builder.BoardUpdateBuilder;
 import com.stayaway.exception.StayAwayException;
 import com.stayaway.model.board.state.BoardStatus;
-import com.stayaway.model.cards.CardType;
 import com.stayaway.utils.PlayerUtils;
 
 public class ChoosingCardBoardState extends AbstractBoardState implements PlayHandler, DiscardHandler {
@@ -22,7 +21,7 @@ public class ChoosingCardBoardState extends AbstractBoardState implements PlayHa
 
     private void validateDiscard(DiscardAction action) {
         validateActionLogin(action.getLogin());
-        validateCardInHand(action.getCard());
+        validateCardNumber(action.getCardNumber());
     }
 
     @Override
@@ -35,7 +34,7 @@ public class ChoosingCardBoardState extends AbstractBoardState implements PlayHa
 
     private void validatePlay(PlayAction action) {
         validateActionLogin(action.getLogin());
-        validateCardInHand(action.getCard());
+        validateCardNumber(action.getCardNumber());
         validateTarget(action.getTarget());
     }
 
@@ -47,10 +46,11 @@ public class ChoosingCardBoardState extends AbstractBoardState implements PlayHa
         }
     }
 
-    private void validateCardInHand(CardType card) {
+    private void validateCardNumber(int cardNumber) {
         var currentPlayer = board.getCurrentPlayer();
-        if (!currentPlayer.getCards().contains(card)) {
-            throw ExceptionUtils.noSuchCardInHand(currentPlayer.getLogin(), card);
+        int handSize = currentPlayer.getCards().size();
+        if (handSize <= cardNumber) {
+            throw ExceptionUtils.notEnoughCardsInHand(cardNumber, handSize);
         }
     }
 
@@ -64,14 +64,16 @@ public class ChoosingCardBoardState extends AbstractBoardState implements PlayHa
 
     private void performDiscard(DiscardAction discardAction) {
         String login = board.getCurrentPlayer().getLogin();
-        builder.removeFromHand(login, discardAction.getCard())
-                .addToTrash(discardAction.getCard());
+        var card = builder.getCurrentPlayer().getCards().get(discardAction.getCardNumber());
+        builder.removeFromHand(login, discardAction.getCardNumber())
+                .addToTrash(card);
     }
 
     private void performPlay(PlayAction action) {
         String login = board.getCurrentPlayer().getLogin();
-        builder.removeFromHand(login, action.getCard())
-                .addToTrash(action.getCard());
+        var card = builder.getCurrentPlayer().getCards().get(action.getCardNumber());
+        builder.removeFromHand(login, action.getCardNumber())
+                .addToTrash(card);
     }
 
 
