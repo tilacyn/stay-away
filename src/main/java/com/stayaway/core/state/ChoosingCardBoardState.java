@@ -9,15 +9,14 @@ import com.stayaway.dao.model.builder.BoardUpdateBuilder;
 import com.stayaway.exception.StayAwayException;
 import com.stayaway.model.board.state.BoardStatus;
 
-public class ChoosingCardBoardState implements BoardState, PlayHandler, DiscardHandler {
-    private Board board;
-
-    private DiscardAction discardAction;
+public class ChoosingCardBoardState extends AbstractBoardState implements PlayHandler, DiscardHandler {
 
     @Override
     public void discard(DiscardAction action) {
         validateDiscard(action);
-        discardAction = action;
+        builder = new BoardUpdateBuilder(board, new ExchangingBoardState());
+        performDiscard(action);
+        preconditionsFulfilled = true;
     }
 
     private void validateDiscard(DiscardAction action) {
@@ -41,30 +40,15 @@ public class ChoosingCardBoardState implements BoardState, PlayHandler, DiscardH
         return BoardStatus.CHOOSING_CARD_TO_PLAY_OR_DISCARD;
     }
 
-    @Override
-    public boolean checkPreconditionsFulfilled() {
-        return discardAction != null;
-    }
 
-    @Override
-    public Board transform() {
-        if (discardAction != null) {
-            BoardUpdateBuilder boardBuilder = new BoardUpdateBuilder(board, new ExchangingBoardState());
-            performDiscard(boardBuilder);
-            return boardBuilder.build();
-        }
-        throw StayAwayException.internalError("play not yet supported");
-    }
-
-    private void performDiscard(BoardUpdateBuilder builder) {
+    private void performDiscard(DiscardAction discardAction) {
         String login = board.getCurrentPlayer().getLogin();
         builder.removeFromHand(login, discardAction.getCard())
                 .addToTrash(discardAction.getCard());
     }
 
-    public void registerHandlers(Board board) {
+    protected void doRegisterHandlers() {
         board.setPlayHandler(this);
         board.setDiscardHandler(this);
-        this.board = board;
     }
 }

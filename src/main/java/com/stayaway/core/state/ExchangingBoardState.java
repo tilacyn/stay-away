@@ -7,8 +7,7 @@ import com.stayaway.core.handler.ExchangeHandler;
 import com.stayaway.dao.model.Board;
 import com.stayaway.model.board.state.BoardStatus;
 
-public class ExchangingBoardState implements BoardState, ExchangeHandler, DefendHandler {
-    private Board board;
+public class ExchangingBoardState extends AbstractBoardState implements ExchangeHandler, DefendHandler {
 
     @Override
     public void defend(DefendAction action) {
@@ -24,20 +23,9 @@ public class ExchangingBoardState implements BoardState, ExchangeHandler, Defend
     }
 
     @Override
-    public boolean checkPreconditionsFulfilled() {
-        return false;
-    }
-
-    @Override
-    public Board transform() {
-        return null;
-    }
-
-    @Override
-    public void registerHandlers(Board board) {
+    public void doRegisterHandlers() {
         board.setExchangeHandler(this);
         board.setDefendHandler(this);
-        this.board = board;
     }
 
 }
