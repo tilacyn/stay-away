@@ -4,9 +4,7 @@ import com.stayaway.core.action.DiscardAction;
 import com.stayaway.core.action.PlayAction;
 import com.stayaway.core.handler.DiscardHandler;
 import com.stayaway.core.handler.PlayHandler;
-import com.stayaway.dao.model.Board;
 import com.stayaway.dao.model.builder.BoardUpdateBuilder;
-import com.stayaway.exception.StayAwayException;
 import com.stayaway.model.board.state.BoardStatus;
 
 public class ChoosingCardBoardState extends AbstractBoardState implements PlayHandler, DiscardHandler {

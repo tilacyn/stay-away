@@ -2,8 +2,6 @@ package com.stayaway.core.state;
 
 import com.stayaway.dao.model.Board;
 import com.stayaway.dao.model.builder.BoardUpdateBuilder;
-import com.stayaway.exception.StayAwayException;
-import com.stayaway.model.board.state.BoardStatus;
 
 public abstract class AbstractBoardState implements BoardState {
     protected Board board;

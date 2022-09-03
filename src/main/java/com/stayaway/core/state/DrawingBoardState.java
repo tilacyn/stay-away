@@ -2,7 +2,6 @@ package com.stayaway.core.state;
 
 import com.stayaway.core.action.DrawAction;
 import com.stayaway.core.handler.DrawHandler;
-import com.stayaway.dao.model.Board;
 import com.stayaway.dao.model.builder.BoardUpdateBuilder;
 import com.stayaway.model.board.state.BoardStatus;
 import com.stayaway.model.cards.CardType;
@@ -30,6 +29,7 @@ public class DrawingBoardState extends AbstractBoardState implements DrawHandler
         builder.removeTopCard()
                 .addToHand(builder.getCurrentPlayer().getLogin(), card);
     }
+
     @Override
     public BoardStatus getStatus() {
         return BoardStatus.DRAWING;
