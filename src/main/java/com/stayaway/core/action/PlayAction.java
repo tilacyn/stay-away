@@ -7,5 +7,5 @@ import lombok.Data;
 public class PlayAction {
     private final String login;
     private final CardType card;
-    private final int targetId;
+    private final String target;
 }

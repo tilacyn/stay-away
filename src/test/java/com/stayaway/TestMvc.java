@@ -3,6 +3,7 @@ package com.stayaway;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.stayaway.request.CreateGameRequest;
 import com.stayaway.request.DiscardRequest;
+import com.stayaway.request.PlayRequest;
 import com.stayaway.response.BoardResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.http.MediaType;
@@ -91,6 +92,15 @@ class TestMvc {
                         .content(discardJson)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isConflict());
+    }
+
+    void expectPlayStatus(String gameId, String login, PlayRequest request, int status) throws Exception {
+        String playJson = new ObjectMapper().writeValueAsString(request);
+        mvc.perform(post("/v1/game/" + gameId + "/play")
+                        .with(user(login))
+                        .content(playJson)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().is(status));
     }
 
     void expectDrawNotAllowed(String gameId, String login) throws Exception {

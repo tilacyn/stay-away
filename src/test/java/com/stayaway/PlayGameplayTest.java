@@ -2,7 +2,7 @@ package com.stayaway;
 
 import com.stayaway.dao.model.User;
 import com.stayaway.model.cards.CardType;
-import com.stayaway.request.DiscardRequest;
+import com.stayaway.request.PlayRequest;
 import com.stayaway.service.UserService;
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
@@ -32,14 +32,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 @AutoConfigureDataMongo
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-public class DiscardGameplayTest {
+public class PlayGameplayTest {
     private static final List<String> testLogins = List.of(ALICE, BOB, ROMA_ELIZAROV, DANIEL);
 
     @Container
     static MongoDBContainer mongoDBContainer = new MongoDBContainer(Constants.MONGO_IMAGE);
 
     @Autowired
-    public DiscardGameplayTest(MockMvc mvc, UserService userService) {
+    public PlayGameplayTest(MockMvc mvc, UserService userService) {
         this.testMvc = new TestMvc(mvc);
         this.userService = userService;
     }
@@ -58,38 +58,36 @@ public class DiscardGameplayTest {
     }
 
     @Test
-    public void should_createDrawDiscardMvc() throws Exception {
+    public void should_createDrawPlayMvc() throws Exception {
         String login = ALICE;
         String gameId = Utils.createAndStart(testMvc, login, "game1");
 
         testMvc.performDraw(gameId, login);
         var boardBefore = testMvc.performGetBoard(gameId, login);
-        CardType toDiscard = boardBefore.getCards().get(0);
-        testMvc.performDiscard(gameId, login, new DiscardRequest(toDiscard));
+        CardType toPlay = boardBefore.getCards().get(0);
+        testMvc.expectPlayStatus(gameId, login, new PlayRequest(toPlay, BOB), 200);
         var boardAfter = testMvc.performGetBoard(gameId, login);
         assertThat(boardAfter.getCards()).size().isEqualTo(4);
-        assertThat(boardAfter.getCurrentPlayerUserID()).isEqualTo(login);
     }
 
     @Test
-    public void check_discardPermissions() throws Exception {
+    public void check_playPermissions() throws Exception {
         String player1 = ALICE;
         String player2 = BOB;
         String gameId = Utils.createAndStart(testMvc, player1, "game1");
 
         testMvc.performDraw(gameId, player1);
         var boardBefore = testMvc.performGetBoard(gameId, player1);
-        CardType toDiscard = boardBefore.getCards().get(0);
-        var discardRequest = new DiscardRequest(toDiscard);
-        var notInHandCardDiscardRequest = new DiscardRequest(getCardNotInHand(boardBefore.getCards()));
+        CardType toPlay = boardBefore.getCards().get(0);
+        var playRequest = new PlayRequest(toPlay, BOB);
+        var wrongTargetRequest = new PlayRequest(toPlay, "wrong-target");
+        var wrongCardRequest = new PlayRequest(getCardNotInHand(boardBefore.getCards()), BOB);
 
-        testMvc.expectDiscardNotAllowed(gameId, player2, discardRequest);
-        testMvc.expectDiscardNotAllowed(gameId, player1, notInHandCardDiscardRequest);
-        // todo uncomment when exchanging is implemented
-        // testMvc.performDiscard(gameId, player1, discardRequest);
-        // testMvc.expectDiscardNotAllowed(gameId, player1, discardRequest);
-        // testMvc.expectDiscardNotAllowed(gameId, player1, notInHandCardDiscardRequest);
-        // testMvc.expectDiscardNotAllowed(gameId, player2, discardRequest);
+
+        testMvc.expectPlayStatus(gameId, player1, wrongTargetRequest, 400);
+        testMvc.expectPlayStatus(gameId, player1, wrongCardRequest, 409);
+        testMvc.expectPlayStatus(gameId, player2, playRequest, 409);
     }
+
 
 }

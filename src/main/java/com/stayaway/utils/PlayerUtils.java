@@ -18,13 +18,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class PlayerUtils {
 
-    public static Player getPlayerByLogin(Board board, String login) throws StayAwayException {
+    public static Player getPlayerByLogin(Board board, String login) {
         return getPlayerByLogin(board.getCurrentPlayer(), login);
     }
 
     public static Player getPlayerByLogin(Player player, String login) {
         return find(player, p -> p.getLogin().equals(login))
-                // todo implement spectators mode
                 .orElseThrow(() -> StayAwayException.internalError("No such user[" + login + "] on the board"));
     }
 

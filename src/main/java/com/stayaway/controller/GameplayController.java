@@ -3,6 +3,7 @@ package com.stayaway.controller;
 import com.stayaway.core.GameplayManager;
 import com.stayaway.core.action.DiscardAction;
 import com.stayaway.core.action.DrawAction;
+import com.stayaway.core.action.PlayAction;
 import com.stayaway.request.DefendRequest;
 import com.stayaway.request.DiscardRequest;
 import com.stayaway.request.ExchangeRequest;
@@ -30,6 +31,8 @@ public class GameplayController {
 
     @PostMapping("/v1/game/{gameId}/play")
     public ResponseEntity<Void> play(@PathVariable String gameId, @RequestBody PlayRequest request, Principal principal) {
+        logger.info("[PLAY] [{}] [{}]", principal.getName(), gameId);
+        gameplayManager.play(new PlayAction(principal.getName(), request.getCardType(), request.getTarget()), gameId);
         return ResponseEntity.ok().build();
     }
 
