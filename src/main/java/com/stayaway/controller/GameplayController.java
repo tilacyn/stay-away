@@ -1,6 +1,7 @@
 package com.stayaway.controller;
 
 import com.stayaway.core.GameplayManager;
+import com.stayaway.core.action.DiscardAction;
 import com.stayaway.core.action.DrawAction;
 import com.stayaway.request.DefendRequest;
 import com.stayaway.request.DiscardRequest;
@@ -34,11 +35,14 @@ public class GameplayController {
 
     @PostMapping("/v1/game/{gameId}/discard")
     public ResponseEntity<Void> discard(@PathVariable String gameId, @RequestBody DiscardRequest request, Principal principal) {
+        logger.info("[DISCARD] [{}] [{}]", principal.getName(), gameId);
+        gameplayManager.discard(new DiscardAction(principal.getName(), request.getCardType()), gameId);
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/v1/game/{gameId}/draw")
     public ResponseEntity<Void> draw(@PathVariable String gameId, Principal principal) {
+        logger.info("[DRAW] [{}] [{}]", principal.getName(), gameId);
         gameplayManager.draw(new DrawAction(principal.getName()), gameId);
         return ResponseEntity.ok().build();
     }

@@ -17,9 +17,17 @@ public class BoardStateWritingConverter implements Converter<BoardState, DBObjec
                 return convertDrawing(state);
             case CHOOSING_CARD_TO_PLAY_OR_DISCARD:
                 return convertChoosingCard(state);
+            case EXCHANGING:
+                return convertExchanging(state);
             default:
                 throw StayAwayException.internalError(String.format("unsupported status %s", state.getStatus()));
         }
+    }
+
+    private DBObject convertExchanging(BoardState state) {
+        DBObject object = new BasicDBObject();
+        object.put("status", state.getStatus());
+        return object;
     }
 
     //    TODO
