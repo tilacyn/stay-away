@@ -1,0 +1,107 @@
+table {
+    margin: 0 auto;
+}
+
+.main-player-hand {
+    position: absolute;
+    bottom: 12px;
+    left: 0;
+    right: 0;
+
+    text-align: center;
+}
+
+    .main-player-card {
+        background: #D9D9D9;
+        border: 1px solid #000000;
+        border-radius: 8px;
+        cursor: pointer;
+
+        display: inline-block;
+
+        width: 106px;
+        height: 136px;
+        padding: 8px;
+    }
+
+    .main-player-card + .main-player-card {
+        margin-left: 24px;
+    }
+
+        .main-player-card_title {
+            font-size: 11px;
+        }
+
+.playArea {
+    width: 800px;
+    margin-top: 10px;
+    height: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.gameTable {
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    background: transparent;
+    border-width: 10px;
+
+    position: relative;
+
+    margin: 30px auto;
+}
+
+.player {
+    position: absolute;
+    width: 176px;
+}
+    .player-card {
+        display: flex;
+        align-items: center;
+        }
+
+        .player-card_name {
+            text-align: center;
+        }
+
+        .player-card_img {
+            width: 50px;
+            height: 50px;
+            margin-right: 12px;
+        }
+
+    .player-card_hand {
+        text-align: right;
+    }
+
+        .player-card_hand-i {
+            background: #D9D9D9;
+            border: 1px solid #000000;
+            border-radius: 9px;
+
+            display: inline-block;
+
+            width: 56px;
+            height: 72px;
+        }
+
+        .player-card_hand-i + .player-card_hand-i {
+            margin-left: -40px;
+        }
+
+        .player-card_hand-i:nth-child(1) {
+            transform: rotate(-7.5deg);
+        }
+
+        .player-card_hand-i:nth-child(2) {
+            transform: rotate(-2.15deg);
+        }
+
+        .player-card_hand-i:nth-child(3) {
+            transform: rotate(3.17deg);
+        }
+
+        .player-card_hand-i:nth-child(4) {
+            transform: rotate(7.4deg);
+        }

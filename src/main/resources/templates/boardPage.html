@@ -1,38 +1,34 @@
 <!DOCTYPE HTML>
-<html
-        xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html lang="en"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="/boardPage.css">
-    <link rel="stylesheet" href="/common.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/boardPage.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+
     <title>Stay Away</title>
-    <script src="/board.js" defer></script>
+    <link rel="icon" href="/img/main.svg">
+    <script src="/js/board.js" defer></script>
     <script src="/webjars/jquery/jquery.min.js"></script>
     <script src="/webjars/sockjs-client/sockjs.min.js"></script>
     <script src="/webjars/stomp-websocket/stomp.min.js"></script>
 </head>
 <body>
+    <div class="main-header">Stay Away</div>
 
-<div class="mainHeader"> Stay Away</div>
+    <div sec:authorize="isAuthenticated()" class="login-info">Authenticated as <span sec:authentication="name"></span></div>
 
-<div sec:authorize="isAuthenticated()" class="loggedInAs">
-    Authenticated as <span sec:authentication="name"></span></div>
-
-<div>
-    <button onclick="drawCardFromDeck()"> Draw Card </button>
-</div>
-
-
-<div class="playArea">
-    <div class="gameTable"></div>
-
-    <div class="mainPlayerHand">
-        <table>
-            <tbody class="mainPlayerHandTBody">
-            </tbody>
-        </table>
+    <div>
+        <button onclick="drawCardFromDeck()">Draw Card </button>
     </div>
-</div>
 
+    <div class="playArea">
+        <div class="gameTable"></div>
+        <div class="main-player-hand"></div>
+    </div>
 </body>
 </html>

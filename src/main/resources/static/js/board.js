@@ -62,63 +62,82 @@ function refresh() {
 function redraw(board) {
     const playerLogins = getPlayerLogins(board);
     redrawPlayers(playerLogins);
-    const cards = getMainPlayerCards(board);
-    redrawMainPlayerCards(cards);
+    const cards = getMainPlayersCards(board);
+    redrawMainPlayersCards(cards);
 }
 
 function getPlayerLogins(board) {
     const players = board['players'];
     let playerLogins = [];
-    for (i = 0; i < players.length; i++) {
+    for (let i = 0; i < players.length; i++) {
         playerLogins.push(players[i]['login']);
     }
     return playerLogins;
 }
 
-function redrawMainPlayerCards(cards) {
-    cardsTBodyElement = document.getElementsByClassName('mainPlayerHandTBody')[0];
+function redrawMainPlayersCards(cards) {
+    let cardsTBodyElement = document.querySelector('.main-player-hand');
     cardsTBodyElement.innerHTML = '';
-    let trElement = document.createElement('tr');
-    for (i = 0; i < cards.length; i++) {
-        trElement.innerHTML = trElement.innerHTML + '<td class="mainPlayerCard"><img src="/none.png" alt="' + cards[i] + '" class="mainPlayerCard"></td>'
+    for (let i = 0; i < cards.length; i++) {
+        const cardEl = document.createElement('div');
+        cardEl.classList.add('main-player-card');
+
+        const cardName = document.createElement('div');
+        cardName.classList.add('main-player-card_title');
+        cardName.innerHTML = cards[i];
+
+        cardEl.appendChild(cardName);
+        cardsTBodyElement.appendChild(cardEl);
     }
-    cardsTBodyElement.appendChild(trElement);
 }
 
-function getMainPlayerCards(board) {
+function getMainPlayersCards(board) {
     return board['cards'];
 }
 
 function redrawPlayers(players) {
-    const tableRadius = 300;
+    const tableRadius = 250;
 
-    const pi = 3.14159265359
+    const pi = 3.14159265359;
+
+    const cardsInHandCount = 4;
 
     let centerMargins = {}
 
-    tableElement = document.getElementsByClassName('gameTable')[0];
+    let tableElement = document.querySelector('.gameTable');
 
     for (let i = 0; i < players.length; i++) {
         let alpha = 2 * pi * i / players.length;
         let centerTop = tableRadius * Math.cos(alpha);
         let centerLeft = tableRadius * Math.sin(pi - alpha);
 
-        let userIcon = document.createElement('div');
+        let playerEl = document.createElement('div');
+        playerEl.classList.add('player');
+        playerEl.style.left = centerLeft + tableRadius - 50 + 'px';
+        playerEl.style.top = centerTop + tableRadius - 50 + 'px';
 
-        userIcon.innerHTML = '<img src="/user-icon.png" alt="N/A" style="width:100px;height:100px;">';
-        userIcon.style.position = 'absolute';
-        userIcon.style.left = centerLeft + tableRadius - 50 + 'px';
-        userIcon.style.top = centerTop + tableRadius - 50 + 'px';
+        let playerCard = document.createElement('div');
+        playerCard.classList.add('player-card');
 
-        let userLogin = document.createElement('div');
+        playerCard.innerHTML = '<img src="/user-icon.png" alt="N/A" class="player-card_img">';
 
-        userLogin.innerHTML = players[i];
-        userLogin.style.color = 'white';
-        userLogin.style['text-align'] = 'center';
+        let userName = document.createElement('div');
 
-        userIcon.appendChild(userLogin);
+        userName.classList.add('player-card_name');
+        userName.innerHTML = players[i];
 
-        tableElement.appendChild(userIcon);
+        playerCard.appendChild(userName);
+        playerEl.appendChild(playerCard);
+
+        let playerHand = document.createElement('div');
+        playerHand.classList.add('player-card_hand');
+        for (let j = 0; j < cardsInHandCount; j++) {
+            let card = document.createElement('div');
+            card.classList.add('player-card_hand-i');
+            playerHand.appendChild(card);
+        }
+
+        playerEl.appendChild(playerHand);
+        tableElement.appendChild(playerEl);
     }
-
 }

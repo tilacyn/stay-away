@@ -1,38 +1,43 @@
 <!DOCTYPE HTML>
-<html xmlns:th="https://www.thymeleaf.org"
-        xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html lang="en"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="/lobbyPage.css">
-    <link rel="stylesheet" href="/common.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/lobbyPage.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+
     <title>Stay Away</title>
-    <script src="/lobby.js"></script>
+    <link rel="icon" href="/img/main.svg">
+    <script src="/js/lobby.js"></script>
 </head>
 <body>
+    <div class="main-header"> Lobby</div>
 
-<div class="mainHeader"> Lobby</div>
+    <div sec:authorize="isAuthenticated()" class="login-info">
+        Authenticated as <span sec:authentication="name"></span></div>
 
-<div sec:authorize="isAuthenticated()" class="loggedInAs">
-    Authenticated as <span sec:authentication="name"></span></div>
+    <div>
+        <button onclick="createGame()"> Create</button>
+    </div>
 
-<div>
-    <button onclick="createGame()"> Create</button>
-</div>
-
-<div class="gameTableArea">
-    <table>
-        <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Status</th>
-        </tr>
-        <tr th:each="game: ${games}" class="gameTable" onclick="openGame(this)">
-            <td th:text="${game.id}" class="idCell"></td>
-            <td th:text="${game.name}" class="nameCell"></td>
-            <td th:text="${game.status}" class="statusCell"></td>
-        </tr>
-    </table>
-</div>
-
+    <div class="gameTableArea">
+        <table>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Status</th>
+            </tr>
+            <tr th:each="game: ${games}" class="gameTable" onclick="openGame(this)">
+                <td th:text="${game.id}" class="idCell"></td>
+                <td th:text="${game.name}" class="nameCell"></td>
+                <td th:text="${game.status}" class="statusCell"></td>
+            </tr>
+        </table>
+    </div>
 </body>
 </html>
