@@ -75,10 +75,10 @@ public class DiscardGameplayTest {
 
         testMvc.performDraw(gameId, player1);
         var discardRequest = new DiscardRequest(0);
-        var notEnoughCardsDiscardRequest = new DiscardRequest(7);
+        var invalidCardNumber = new DiscardRequest(7);
 
-        testMvc.expectDiscardNotAllowed(gameId, player2, discardRequest);
-        testMvc.expectDiscardNotAllowed(gameId, player1, notEnoughCardsDiscardRequest);
+        testMvc.expectDiscardStatus(gameId, player2, discardRequest, 409);
+        testMvc.expectDiscardStatus(gameId, player1, invalidCardNumber, 400);
         // todo uncomment when exchanging is implemented
         // testMvc.performDiscard(gameId, player1, discardRequest);
         // testMvc.expectDiscardNotAllowed(gameId, player1, discardRequest);

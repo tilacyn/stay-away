@@ -50,7 +50,7 @@ public class ChoosingCardBoardState extends AbstractBoardState implements PlayHa
         var currentPlayer = board.getCurrentPlayer();
         int handSize = currentPlayer.getCards().size();
         if (handSize <= cardNumber) {
-            throw ExceptionUtils.notEnoughCardsInHand(cardNumber, handSize);
+            throw ExceptionUtils.invalidCardNumber(cardNumber, handSize);
         }
     }
 

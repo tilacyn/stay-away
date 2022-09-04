@@ -75,11 +75,11 @@ public class PlayGameplayTest {
         testMvc.performDraw(gameId, player1);
         var playRequest = new PlayRequest(0, BOB);
         var wrongTargetRequest = new PlayRequest(0, "wrong-target");
-        var notEnoughCardsRequest = new PlayRequest(7, BOB);
+        var invalidCardNumberRequest = new PlayRequest(7, BOB);
 
 
         testMvc.expectPlayStatus(gameId, player1, wrongTargetRequest, 400);
-        testMvc.expectPlayStatus(gameId, player1, notEnoughCardsRequest, 409);
+        testMvc.expectPlayStatus(gameId, player1, invalidCardNumberRequest, 400);
         testMvc.expectPlayStatus(gameId, player2, playRequest, 409);
     }
 

@@ -85,13 +85,13 @@ class TestMvc {
                 .andExpect(status().isOk());
     }
 
-    void expectDiscardNotAllowed(String gameId, String login, DiscardRequest request) throws Exception {
+    void expectDiscardStatus(String gameId, String login, DiscardRequest request, int status) throws Exception {
         String discardJson = new ObjectMapper().writeValueAsString(request);
         mvc.perform(post("/v1/game/" + gameId + "/discard")
                         .with(user(login))
                         .content(discardJson)
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isConflict());
+                .andExpect(status().is(status));
     }
 
     void expectPlayStatus(String gameId, String login, PlayRequest request, int status) throws Exception {
