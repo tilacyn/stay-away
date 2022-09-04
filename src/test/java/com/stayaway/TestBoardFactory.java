@@ -1,10 +1,5 @@
 package com.stayaway;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 import com.stayaway.core.CardsDistributor;
 import com.stayaway.dao.model.Game;
 import com.stayaway.model.board.player.Player;
@@ -12,10 +7,20 @@ import com.stayaway.service.BasicBoardFactory;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import static com.stayaway.Constants.ALICE;
+import static com.stayaway.Constants.BOB;
+import static com.stayaway.Constants.DANIEL;
+import static com.stayaway.Constants.ROMA_ELIZAROV;
+
 @Component
 @Primary
 public class TestBoardFactory extends BasicBoardFactory {
-    private static final List<String> logins = List.of("Alice", "Bob", "RomaElizarov", "Daniel");
+    private static final List<String> logins = List.of(ALICE, BOB, ROMA_ELIZAROV, DANIEL);
 
     protected Set<String> getGameUserLogins(Game game) {
         return Set.copyOf(logins);

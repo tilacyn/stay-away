@@ -20,6 +20,10 @@ public class StayAwayException extends RuntimeException {
         return new StayAwayException(new StayAwayEntityNotFoundPayload(id, entityType), HttpStatus.NOT_FOUND);
     }
 
+    public static StayAwayException badRequest(String message) {
+        return new StayAwayException(new StayAwayBadRequestPayload(message), HttpStatus.BAD_REQUEST);
+    }
+
     public static StayAwayException internalError(String message) {
         return new StayAwayException(new StayAwayInternalErrorPayload(message), HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -61,6 +65,23 @@ public class StayAwayException extends RuntimeException {
     @AllArgsConstructor
     private static class StayAwayInternalErrorPayload implements StayAwaySerializationPayload {
         private final String message;
+
+        @Override
+        public String toString() {
+            return getMessage();
+        }
+    }
+
+    @Getter
+    @AllArgsConstructor
+    private static class StayAwayBadRequestPayload implements StayAwaySerializationPayload {
+        private final String message;
+
+        @Override
+        public String getMessage() {
+            return String.format("bad request: %s", message);
+
+        }
 
         @Override
         public String toString() {

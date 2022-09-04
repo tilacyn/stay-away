@@ -9,4 +9,5 @@ class Utils {
 
         return mvc.createAndStartGame(createGameRequest, login);
     }
+
 }
