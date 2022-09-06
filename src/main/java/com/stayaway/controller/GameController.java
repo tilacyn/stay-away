@@ -36,6 +36,11 @@ public class GameController {
         this.boardResponseFactory = boardResponseFactory;
     }
 
+    @GetMapping("/")
+    public String getReactPage(Model model, Principal principal) {
+        logger.info("[GET_REACT_PAGE] [{}]", principal.getName());
+        return "index";
+    }
 
     @GetMapping("/lobby")
     public String getLobbyPage(Model model, Principal principal) {

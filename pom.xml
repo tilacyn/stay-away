@@ -159,6 +159,59 @@
                     </excludes>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>com.github.eirslett</groupId>
+                <artifactId>frontend-maven-plugin</artifactId>
+                <version>1.12.1</version>
+
+                <executions>
+
+                    <execution>
+                        <id>install node and npm</id>
+                        <goals>
+                            <goal>install-node-and-npm</goal>
+                        </goals>
+                        <configuration>
+                            <nodeVersion>v16.15.1</nodeVersion>
+                            <npmVersion>8.13.2</npmVersion>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>npm install</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                    </execution>
+
+                    <execution>
+                        <id>npm run build</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>run build</arguments>
+                        </configuration>
+                    </execution>
+
+<!--                    <execution>-->
+<!--                        <id>webpack build</id>-->
+<!--                        <goals>-->
+<!--                            <goal>webpack</goal>-->
+<!--                        </goals>-->
+
+<!--                        &lt;!&ndash; optional: the default phase is "generate-resources" &ndash;&gt;-->
+<!--                        <phase>generate-resources</phase>-->
+
+<!--                        <configuration>-->
+<!--                            &lt;!&ndash; optional: if not specified, it will run webpack's default-->
+<!--                            build (and you can remove this whole <configuration> section.) &ndash;&gt;-->
+<!--                            <arguments>-p</arguments>-->
+<!--                        </configuration>-->
+<!--                    </execution>-->
+
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
