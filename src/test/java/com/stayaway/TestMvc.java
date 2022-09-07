@@ -3,6 +3,7 @@ package com.stayaway;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.stayaway.request.CreateGameRequest;
 import com.stayaway.request.DiscardRequest;
+import com.stayaway.request.ExchangeRequest;
 import com.stayaway.request.PlayRequest;
 import com.stayaway.response.BoardResponse;
 import lombok.AllArgsConstructor;
@@ -19,7 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AllArgsConstructor
-class TestMvc {
+public class TestMvc {
     private final MockMvc mvc;
 
     private String getGameIdFromLocation(String location) {
@@ -108,5 +109,14 @@ class TestMvc {
                         .with(user(login))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isConflict());
+    }
+
+    void expectExchangeStatus(String gameId, String login, ExchangeRequest request, int status) throws Exception {
+        String discardJson = new ObjectMapper().writeValueAsString(request);
+        mvc.perform(post("/v1/game/" + gameId + "/exchange")
+                        .with(user(login))
+                        .content(discardJson)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().is(status));
     }
 }

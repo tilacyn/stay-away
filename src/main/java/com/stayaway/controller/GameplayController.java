@@ -1,8 +1,11 @@
 package com.stayaway.controller;
 
+import java.security.Principal;
+
 import com.stayaway.core.GameplayManager;
 import com.stayaway.core.action.DiscardAction;
 import com.stayaway.core.action.DrawAction;
+import com.stayaway.core.action.ExchangeAction;
 import com.stayaway.core.action.PlayAction;
 import com.stayaway.request.DefendRequest;
 import com.stayaway.request.DiscardRequest;
@@ -16,8 +19,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.security.Principal;
-
 @RestController
 public class GameplayController {
 
@@ -30,16 +31,18 @@ public class GameplayController {
     }
 
     @PostMapping("/v1/game/{gameId}/play")
-    public ResponseEntity<Void> play(@PathVariable String gameId, @RequestBody PlayRequest request, Principal principal) {
-        logger.info("[PLAY] [{}] [{}]", principal.getName(), gameId);
-        gameplayManager.play(new PlayAction(principal.getName(), request.getCardNumber(), request.getTarget()), gameId);
+    public ResponseEntity<Void> play(@PathVariable String gameId, @RequestBody PlayRequest request,
+                                     Principal principal) {
+        logger.info("[PLAY] [{}] [{}] [{}] [{}]", principal.getName(), request.getCard(), request.getTarget(), gameId);
+        gameplayManager.play(new PlayAction(principal.getName(), request.getCard(), request.getTarget()), gameId);
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/v1/game/{gameId}/discard")
-    public ResponseEntity<Void> discard(@PathVariable String gameId, @RequestBody DiscardRequest request, Principal principal) {
-        logger.info("[DISCARD] [{}] [{}]", principal.getName(), gameId);
-        gameplayManager.discard(new DiscardAction(principal.getName(), request.getCardNumber()), gameId);
+    public ResponseEntity<Void> discard(@PathVariable String gameId, @RequestBody DiscardRequest request,
+                                        Principal principal) {
+        logger.info("[DISCARD] [{}] [{}] [{}]", principal.getName(), request.getCard(), gameId);
+        gameplayManager.discard(new DiscardAction(principal.getName(), request.getCard()), gameId);
         return ResponseEntity.ok().build();
     }
 
@@ -51,12 +54,16 @@ public class GameplayController {
     }
 
     @PostMapping("/v1/game/{gameId}/defend")
-    public ResponseEntity<Void> defend(@PathVariable String gameId, @RequestBody DefendRequest request, Principal principal) {
+    public ResponseEntity<Void> defend(@PathVariable String gameId, @RequestBody DefendRequest request,
+                                       Principal principal) {
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/v1/game/{gameId}/exchange")
-    public ResponseEntity<Void> exchange(@PathVariable String gameId, @RequestBody ExchangeRequest request, Principal principal) {
+    public ResponseEntity<Void> exchange(@PathVariable String gameId, @RequestBody ExchangeRequest request,
+                                         Principal principal) {
+        logger.info("[EXCHANGE] [{}] [{}] [{}]", principal.getName(), request.getCard(), gameId);
+        gameplayManager.exchange(new ExchangeAction(principal.getName(), request.getCard()), gameId);
         return ResponseEntity.ok().build();
     }
 
