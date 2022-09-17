@@ -2,7 +2,7 @@ refresh();
 
 var stompClient = null;
 
-connect()
+connect();
 
 function connect() {
     var socket = new SockJS('/gs-guide-websocket');
@@ -19,7 +19,7 @@ function disconnect() {
     if (stompClient !== null) {
         stompClient.disconnect();
     }
-    console.log("Disconnected");
+    console.log('Disconnected');
 }
 
 
@@ -35,6 +35,55 @@ function drawCardFromDeck() {
     }
 }
 
+function discard() {
+    const xhr = new XMLHttpRequest();
+    const gameId = getGameId();
+    xhr.open('POST', '/v1/game/' + gameId + '/discard', false);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    const json = JSON.stringify({
+        card: 0
+    });
+    xhr.send(json);
+
+    if (xhr.status !== 200) {
+        alert('failed to discard: ' + xhr.response);
+        console.log('failed to discard: ' + xhr.response);
+    }
+}
+
+function play() {
+    const xhr = new XMLHttpRequest();
+    const gameId = getGameId();
+    xhr.open('POST', '/v1/game/' + gameId + '/play', false);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    const json = JSON.stringify({
+        card: 0,
+        target: 'tilacyn'
+    });
+    xhr.send(json);
+
+    if (xhr.status !== 200) {
+        alert('failed to discard: ' + xhr.response);
+        console.log('failed to discard: ' + xhr.response);
+    }
+}
+
+function exchange() {
+    const xhr = new XMLHttpRequest();
+    const gameId = getGameId();
+    xhr.open('POST', '/v1/game/' + gameId + '/exchange', false);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    const json = JSON.stringify({
+        card: 0
+    });
+    xhr.send(json);
+
+    if (xhr.status !== 200) {
+        alert('failed to discard: ' + xhr.response);
+        console.log('failed to discard: ' + xhr.response);
+    }
+}
+
 function getGameId() {
     let strings = document.location.href.split('/');
     return strings[strings.length - 1];
@@ -46,7 +95,7 @@ function refresh() {
     const gameId = getGameId();
     xhr.responseType = 'json';
     xhr.open('GET', '/v1/game/' + gameId + '/board', true);
-    xhr.onload = function() {
+    xhr.onload = function () {
         if (xhr.status !== 200) {
             alert('failed to get board: ' + xhr.response);
             console.log('failed to get board: ' + xhr.response);
@@ -54,7 +103,7 @@ function refresh() {
         }
         const board = xhr.response;
         redraw(board);
-    }
+    };
 
     xhr.send(null);
 }
@@ -80,7 +129,7 @@ function redrawMainPlayerCards(cards) {
     cardsTBodyElement.innerHTML = '';
     let trElement = document.createElement('tr');
     for (i = 0; i < cards.length; i++) {
-        trElement.innerHTML = trElement.innerHTML + '<td class="mainPlayerCard"><img src="/none.png" alt="' + cards[i] + '" class="mainPlayerCard"></td>'
+        trElement.innerHTML = trElement.innerHTML + '<td class="mainPlayerCard"><img src="/none.png" alt="' + cards[i] + '" class="mainPlayerCard"></td>';
     }
     cardsTBodyElement.appendChild(trElement);
 }
@@ -92,9 +141,9 @@ function getMainPlayerCards(board) {
 function redrawPlayers(players) {
     const tableRadius = 300;
 
-    const pi = 3.14159265359
+    const pi = 3.14159265359;
 
-    let centerMargins = {}
+    let centerMargins = {};
 
     tableElement = document.getElementsByClassName('gameTable')[0];
 

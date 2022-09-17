@@ -7,7 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+//todo STAYAWAY-40
 public class PlayRequest {
-    private int cardNumber;
+    private int card;
     private String target;
 }

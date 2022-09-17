@@ -1,14 +1,14 @@
 package com.stayaway.dao.model.builder;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.stayaway.core.state.BoardState;
 import com.stayaway.dao.model.Board;
 import com.stayaway.model.board.Direction;
 import com.stayaway.model.board.player.Player;
 import com.stayaway.model.cards.CardType;
 import com.stayaway.utils.PlayerUtils;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @SuppressWarnings("UnusedReturnValue")
 public class BoardUpdateBuilder extends BoardBuilder {
@@ -66,6 +66,24 @@ public class BoardUpdateBuilder extends BoardBuilder {
 
     public BoardUpdateBuilder addToTrash(CardType card) {
         trash.add(card);
+        return this;
+    }
+
+    public BoardUpdateBuilder nextPlayer() {
+        currentPlayer = currentPlayer.getNext(direction);
+        return this;
+    }
+
+    public BoardUpdateBuilder nextTurn() {
+        turn += 1;
+        return this;
+    }
+
+    public BoardUpdateBuilder transit(String from, String to, int card) {
+        Player fromPlayer = PlayerUtils.getPlayerByLogin(currentPlayer, from);
+        Player toPlayer = PlayerUtils.getPlayerByLogin(currentPlayer, to);
+        CardType removed = fromPlayer.getCards().remove(card);
+        toPlayer.getCards().add(removed);
         return this;
     }
 }

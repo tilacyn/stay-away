@@ -14,27 +14,29 @@ public class ChoosingCardBoardState extends AbstractBoardState implements PlayHa
     @Override
     public void discard(DiscardAction action) {
         validateDiscard(action);
-        builder = new BoardUpdateBuilder(board, new ExchangingBoardState());
+        builder = new BoardUpdateBuilder(board,
+                new ExchangingBoardState(board.getCurrentPlayer().getLogin(), board.nextPlayer().getLogin()));
         performDiscard(action);
         preconditionsFulfilled = true;
     }
 
     private void validateDiscard(DiscardAction action) {
         validateActionLogin(action.getLogin());
-        validateCardNumber(action.getCardNumber());
+        validateCardNumber(action.getLogin(), action.getCardNumber());
     }
 
     @Override
     public void play(PlayAction action) {
         validatePlay(action);
-        builder = new BoardUpdateBuilder(board, new ExchangingBoardState());
+        builder = new BoardUpdateBuilder(board, new ExchangingBoardState(board.getCurrentPlayer().getLogin(),
+                board.nextPlayer().getLogin()));
         performPlay(action);
         preconditionsFulfilled = true;
     }
 
     private void validatePlay(PlayAction action) {
         validateActionLogin(action.getLogin());
-        validateCardNumber(action.getCardNumber());
+        validateCardNumber(action.getLogin(), action.getCardNumber());
         validateTarget(action.getTarget());
     }
 
@@ -42,15 +44,7 @@ public class ChoosingCardBoardState extends AbstractBoardState implements PlayHa
     private void validateActionLogin(String actionLogin) {
         var currentPlayer = board.getCurrentPlayer();
         if (!currentPlayer.getLogin().equals(actionLogin)) {
-            throw ExceptionUtils.playerActionNotExpected(currentPlayer.getLogin(), actionLogin);
-        }
-    }
-
-    private void validateCardNumber(int cardNumber) {
-        var currentPlayer = board.getCurrentPlayer();
-        int handSize = currentPlayer.getCards().size();
-        if (handSize <= cardNumber) {
-            throw ExceptionUtils.invalidCardNumber(cardNumber, handSize);
+            throw ExceptionUtils.playerActionNotExpected(actionLogin);
         }
     }
 

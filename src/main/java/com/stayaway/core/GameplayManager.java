@@ -1,14 +1,19 @@
 package com.stayaway.core;
 
 
-import com.stayaway.core.action.*;
+import java.util.Optional;
+import java.util.function.Consumer;
+
+import com.stayaway.core.action.ConfirmAction;
+import com.stayaway.core.action.DefendAction;
+import com.stayaway.core.action.DiscardAction;
+import com.stayaway.core.action.DrawAction;
+import com.stayaway.core.action.ExchangeAction;
+import com.stayaway.core.action.PlayAction;
 import com.stayaway.dao.model.Board;
 import com.stayaway.exception.StayAwayException;
 import com.stayaway.service.GameService;
 import org.springframework.stereotype.Component;
-
-import java.util.Optional;
-import java.util.function.Consumer;
 
 @Component
 public class GameplayManager {
@@ -23,7 +28,7 @@ public class GameplayManager {
     public void exchange(ExchangeAction action, String gameId) {
         process(gameId, board -> {
             var handler = Optional.ofNullable(board.getExchangeHandler())
-                    .orElseThrow(UnsupportedOperationException::new);
+                    .orElseThrow(() -> gameplayActionNotAllowed(board, "exchange"));
             handler.exchange(action);
         });
     }
@@ -31,7 +36,7 @@ public class GameplayManager {
     public void defend(DefendAction action, String gameId) {
         process(gameId, board -> {
             var handler = Optional.ofNullable(board.getDefendHandler())
-                    .orElseThrow(UnsupportedOperationException::new);
+                    .orElseThrow(() -> gameplayActionNotAllowed(board, "defend"));
             handler.defend(action);
         });
     }
@@ -92,6 +97,7 @@ public class GameplayManager {
 
     private static StayAwayException gameplayActionNotAllowed(Board b, String actionName) {
         var status = b.getBoardState().getStatus();
-        return StayAwayException.conflict(String.format("method %s is not allowed, current status: %s", actionName, status));
+        return StayAwayException.conflict(String.format("method %s is not allowed, current status: %s", actionName,
+                status));
     }
 }

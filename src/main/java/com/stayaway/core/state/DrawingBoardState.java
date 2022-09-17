@@ -20,7 +20,7 @@ public class DrawingBoardState extends AbstractBoardState implements DrawHandler
         String currentPlayerLogin = board.getCurrentPlayer().getLogin();
         String actionLogin = action.getLogin();
         if (!currentPlayerLogin.equals(actionLogin)) {
-            throw ExceptionUtils.playerActionNotExpected(currentPlayerLogin, actionLogin);
+            throw ExceptionUtils.playerActionNotExpected(actionLogin);
         }
     }
 

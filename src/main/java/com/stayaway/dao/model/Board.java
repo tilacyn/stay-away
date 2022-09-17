@@ -1,19 +1,23 @@
 package com.stayaway.dao.model;
 
-import com.stayaway.core.handler.*;
+import java.util.List;
+
+import com.stayaway.core.handler.ConfirmHandler;
+import com.stayaway.core.handler.DefendHandler;
+import com.stayaway.core.handler.DiscardHandler;
+import com.stayaway.core.handler.DrawHandler;
+import com.stayaway.core.handler.ExchangeHandler;
+import com.stayaway.core.handler.PlayHandler;
 import com.stayaway.core.state.BoardState;
 import com.stayaway.model.board.Direction;
 import com.stayaway.model.board.player.Player;
 import com.stayaway.model.cards.CardType;
-import lombok.Builder;
 import lombok.Data;
-import org.bson.codecs.pojo.annotations.BsonIgnore;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
-
-import java.util.List;
 
 @Document(collection = "boards")
 @Data
@@ -40,20 +44,24 @@ public class Board {
 
     private final BoardState boardState;
 
-    @BsonIgnore
+    @Transient
     private ExchangeHandler exchangeHandler;
-    @BsonIgnore
+    @Transient
     private DrawHandler drawHandler;
-    @BsonIgnore
+    @Transient
     private DiscardHandler discardHandler;
-    @BsonIgnore
+    @Transient
     private PlayHandler playHandler;
-    @BsonIgnore
+    @Transient
     private DefendHandler defendHandler;
-    @BsonIgnore
+    @Transient
     private ConfirmHandler confirmHandler;
 
     public void registerHandlers() {
         boardState.registerHandlers(this);
+    }
+
+    public Player nextPlayer() {
+        return currentPlayer.getNext(direction);
     }
 }

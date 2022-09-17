@@ -8,5 +8,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DiscardRequest {
-    private int cardNumber;
+    private int card;
 }
