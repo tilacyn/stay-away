@@ -193,23 +193,6 @@
                             <arguments>run build</arguments>
                         </configuration>
                     </execution>
-
-<!--                    <execution>-->
-<!--                        <id>webpack build</id>-->
-<!--                        <goals>-->
-<!--                            <goal>webpack</goal>-->
-<!--                        </goals>-->
-
-<!--                        &lt;!&ndash; optional: the default phase is "generate-resources" &ndash;&gt;-->
-<!--                        <phase>generate-resources</phase>-->
-
-<!--                        <configuration>-->
-<!--                            &lt;!&ndash; optional: if not specified, it will run webpack's default-->
-<!--                            build (and you can remove this whole <configuration> section.) &ndash;&gt;-->
-<!--                            <arguments>-p</arguments>-->
-<!--                        </configuration>-->
-<!--                    </execution>-->
-
                 </executions>
             </plugin>
         </plugins>

@@ -1,7 +1,8 @@
 const ReactDOM = require("react-dom/client");
 const React = require("react");
-const Header = require("./components/header.jsx");
-const Article = require("./components/article.jsx");
+import Header from "./components/Header/header.jsx";
+import Article from "./components/Article/article.jsx";
+import "./styles.jsx";
 
 const header = "Рассказ";
 const article = "После одного из заседаний N-ского мирового съезда судьи собрались в совещательной комнате, чтобы снять свои мундиры, минутку отдохнуть и ехать домой обедать.";
