@@ -37,6 +37,6 @@ build/
 
 ### JS bundle ###
 /public/
-/node/
-/node_modules/
-package-lock.json
+/frontend/node/
+/frontend/node_modules/
+/frontend/package-lock.json

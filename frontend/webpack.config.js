@@ -23,9 +23,10 @@ const cssLoaders = (extra) => {
 
 
 module.exports = {
-    entry: "./src/main/resources/app.jsx",
+    entry: "/src/app.jsx",
     output : {
-        path: path.resolve(__dirname, "public"),
+        // на подумать, пока не заводится: path: path.resolve("..", "target", "public"),
+        path: path.resolve("..", "public"),
         publicPath: "/public/",
         filename: "bundle.js"
     },
